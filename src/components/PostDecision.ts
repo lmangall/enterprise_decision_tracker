@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { DecisionContext } from "@/context/DecisionContext";
 
-interface NewGoal {
+interface NewDecision {
   id: number;
   golden_ticket: boolean;
   title: string;
   description: string;
-  measurable_goal: string;
+  measurable_Decision: string;
   status: "Pending" | "Completed";
   goal_met: boolean;
   comments?: string;
@@ -15,36 +15,38 @@ interface NewGoal {
   updated_at: string;
 }
 
-// put on db
-export async function createGoal(newGoal: NewGoal): Promise<NewGoal> {
+// Put on db
+export async function createDecision(
+  newDecision: NewDecision
+): Promise<NewDecision> {
   try {
-    console.log(newGoal);
-    // simulate returning the goal
-    return newGoal;
+    console.log(newDecision);
+    // Simulate returning the decision
+    return newDecision;
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
-export function usePostGoal() {
+export function usePostDecision() {
   const context = useContext(DecisionContext);
 
   if (!context) {
-    throw new Error("usePostGoal must be used within a DecisionProvider");
+    throw new Error("usePostDecision must be used within a DecisionProvider");
   }
 
-  //destructuring assignment:extracts addGoal function from  context
-  const { addGoal } = context;
+  // Destructuring assignment: extracts addDecision function from context
+  const { addDecision } = context;
 
-  const postGoal = async (newGoal: NewGoal) => {
+  const postDecision = async (newDecision: NewDecision) => {
     try {
-      const goal = await createGoal(newGoal);
-      addGoal(goal);
+      const decision = await createDecision(newDecision); // Call createDecision
+      addDecision(decision);
     } catch (error) {
-      console.error("Failed to post goal", error);
+      console.error("Failed to post decision", error);
     }
   };
 
-  return { postGoal };
+  return { postDecision };
 }

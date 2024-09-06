@@ -2,12 +2,12 @@
 
 import React, { createContext, useState, ReactNode } from "react";
 
-interface Goal {
+interface Decision {
   id: number;
   golden_ticket: boolean;
   title: string;
   description: string;
-  measurable_goal: string;
+  measurable_Decision: string;
   status: "Pending" | "Completed";
   goal_met: boolean;
   comments?: string;
@@ -17,10 +17,10 @@ interface Goal {
 }
 
 interface DecisionContextProps {
-  goals: Goal[];
-  addGoal: (goal: Goal) => void;
-  removeGoal: (id: number) => void;
-  updateGoal: (goal: Goal) => void;
+  decisions: Decision[];
+  addDecision: (decision: Decision) => void;
+  removeDecision: (id: number) => void;
+  updateDecision: (decision: Decision) => void;
 }
 
 export const DecisionContext = createContext<DecisionContextProps | undefined>(
@@ -30,25 +30,29 @@ export const DecisionContext = createContext<DecisionContextProps | undefined>(
 export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const [decisions, setDecisions] = useState<Decision[]>([]);
 
-  const addGoal = (goal: Goal) => {
-    setGoals((prevGoals) => [...prevGoals, goal]);
+  const addDecision = (decision: Decision) => {
+    setDecisions((prevDecisions) => [...prevDecisions, decision]);
   };
 
-  const removeGoal = (id: number) => {
-    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+  const removeDecision = (id: number) => {
+    setDecisions((prevDecisions) =>
+      prevDecisions.filter((decision) => decision.id !== id)
+    );
   };
 
-  const updateGoal = (updatedGoal: Goal) => {
-    setGoals((prevGoals) =>
-      prevGoals.map((goal) => (goal.id === updatedGoal.id ? updatedGoal : goal))
+  const updateDecision = (updatedDecision: Decision) => {
+    setDecisions((prevDecisions) =>
+      prevDecisions.map((decision) =>
+        decision.id === updatedDecision.id ? updatedDecision : decision
+      )
     );
   };
 
   return (
     <DecisionContext.Provider
-      value={{ goals, addGoal, removeGoal, updateGoal }}
+      value={{ decisions, addDecision, removeDecision, updateDecision }}
     >
       {children}
     </DecisionContext.Provider>
