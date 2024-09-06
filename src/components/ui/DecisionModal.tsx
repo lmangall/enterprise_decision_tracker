@@ -20,10 +20,8 @@ import { format } from "date-fns";
 type FormData = {
   title: string;
   description: string;
-  decisionType: string;
   priority: string;
   measurableGoal: string;
-  kpis: string;
   targetDate: Date | null;
   status: string;
 };
@@ -35,10 +33,8 @@ export default function DecisionModal() {
     defaultValues: {
       title: "",
       description: "",
-      decisionType: "",
       priority: "",
       measurableGoal: "",
-      kpis: "",
       targetDate: null,
       status: "",
     },
@@ -102,26 +98,6 @@ export default function DecisionModal() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="decisionType">Decision Type</Label>
-                <Controller
-                  name="decisionType"
-                  control={control}
-                  rules={{ required: "Decision type is required" }}
-                  render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select decision type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="strategic">Strategic</SelectItem>
-                        <SelectItem value="tactical">Tactical</SelectItem>
-                        <SelectItem value="operational">Operational</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </div>
-              <div className="space-y-2">
                 <Label htmlFor="priority">Priority</Label>
                 <Controller
                   name="priority"
@@ -157,21 +133,7 @@ export default function DecisionModal() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="kpis">Key Performance Indicators (KPIs)</Label>
-                <Controller
-                  name="kpis"
-                  control={control}
-                  render={({ field }) => (
-                    <Textarea
-                      id="kpis"
-                      placeholder="Specific metrics to track progress"
-                      {...field}
-                    />
-                  )}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Target Date</Label>
+                <Label htmlFor="targetDate">Target Date</Label>
                 <div className="flex items-center">
                   <Input
                     type="text"
