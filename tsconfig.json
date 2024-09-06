@@ -37,7 +37,7 @@
     "src/**/*",
     ".next/types/**/*.ts",
     "cypress/**/*.ts"
-  ],
+, "src/components/.EditDecision.ts", "src/components/.DeleteDecision.ts"  ],
   "exclude": [
     "node_modules"
   ]
