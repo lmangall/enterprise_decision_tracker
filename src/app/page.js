@@ -1,6 +1,6 @@
 "use client";
 
-import { DecisionModal } from "@/components/ui/DecisionModal";
+import DecisionModal from "@/components/ui/DecisionModal";
 
 export default function Home() {
   return (
