@@ -1,5 +1,5 @@
 import "./globals.css";
-import { ContextProvider } from "../context/DecisionContext";
+import { DecisionProvider } from "../context/DecisionContext"; // Adjust the path if needed
 
 export const metadata = {
   title: "Decision Tracker",
@@ -8,10 +8,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ContextProvider>
+    <DecisionProvider>
       <html lang="en">
         <body>{children}</body>
       </html>
-    </ContextProvider>
+    </DecisionProvider>
   );
 }

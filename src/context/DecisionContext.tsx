@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, ReactNode } from "react";
 
 interface Goal {
   id: number;
@@ -16,27 +16,41 @@ interface Goal {
   updated_at: string;
 }
 
-interface MyContextType {
+interface DecisionContextProps {
   goals: Goal[];
-  setGoals: (goals: Goal[]) => void;
+  addGoal: (goal: Goal) => void;
+  removeGoal: (id: number) => void;
+  updateGoal: (goal: Goal) => void;
 }
 
-const DecisionContext = createContext<MyContextType | undefined>(undefined);
+export const DecisionContext = createContext<DecisionContextProps | undefined>(
+  undefined
+);
 
-export const ContextProvider = ({ children }: { children: ReactNode }) => {
+export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [goals, setGoals] = useState<Goal[]>([]);
 
+  const addGoal = (goal: Goal) => {
+    setGoals((prevGoals) => [...prevGoals, goal]);
+  };
+
+  const removeGoal = (id: number) => {
+    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+  };
+
+  const updateGoal = (updatedGoal: Goal) => {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) => (goal.id === updatedGoal.id ? updatedGoal : goal))
+    );
+  };
+
   return (
-    <DecisionContext.Provider value={{ goals, setGoals }}>
+    <DecisionContext.Provider
+      value={{ goals, addGoal, removeGoal, updateGoal }}
+    >
       {children}
     </DecisionContext.Provider>
   );
-};
-
-export const useMyContext = () => {
-  const context = useContext(DecisionContext);
-  if (context === undefined) {
-    throw new Error("useMyContext must be used within a ContextProvider");
-  }
-  return context;
 };
