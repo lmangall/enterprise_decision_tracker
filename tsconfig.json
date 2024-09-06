@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress"],
     "target": "es6",
     "lib": [
       "dom",
@@ -34,7 +35,8 @@
   },
   "include": [
     "src/**/*",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "cypress/**/*.ts"
   ],
   "exclude": [
     "node_modules"
