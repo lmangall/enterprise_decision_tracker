@@ -16,7 +16,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
   return (
     <Tabs defaultValue="details">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsTrigger value="details">Detail</TabsTrigger>
         <TabsTrigger value="about">About</TabsTrigger>
       </TabsList>
       <TabsContent value="details" className="max-h-96 overflow-y-auto">
@@ -24,7 +24,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
           <CardHeader>
             <CardTitle>Decision Details</CardTitle>
             <CardDescription>
-              View the selected decisions details
+              Select a decision from the table to view details
             </CardDescription>
           </CardHeader>
           <CardContent>
