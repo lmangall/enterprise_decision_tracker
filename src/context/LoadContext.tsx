@@ -5,17 +5,18 @@ import { Decision } from "@/types/decision";
 
 // Component that loads decisions into the context when the app starts, only if not already loaded
 const LoadContext: React.FC = () => {
-  const { decisions, addDecision } = useDecisionContext();
+  const { decisions, addDecision, fetched, setFetched } = useDecisionContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if decisions are already loaded in the context
-    if (decisions.length === 0) {
+    if (!fetched) {
       const fetchDecisions = async () => {
         try {
           const fetchedDecisions: Decision[] = await retrieveDecisions();
           fetchedDecisions.forEach((decision) => addDecision(decision));
+          setFetched(true); // Mark as fetched after successful loading
           setLoading(false);
         } catch (err) {
           console.error("Failed to load decisions", err);

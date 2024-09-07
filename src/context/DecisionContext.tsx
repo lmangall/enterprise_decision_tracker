@@ -8,6 +8,8 @@ interface DecisionContextProps {
   addDecision: (decision: Decision) => void;
   removeDecision: (id: number) => void;
   updateDecision: (decision: Decision) => void;
+  fetched: boolean;
+  setFetched: (fetched: boolean) => void;
 }
 
 export const DecisionContext = createContext<DecisionContextProps | undefined>(
@@ -18,6 +20,7 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [decisions, setDecisions] = useState<Decision[]>([]);
+  const [fetched, setFetched] = useState(false); //track if decisions are already loaded
 
   const addDecision = (decision: Decision) => {
     //TODO: add validation: check for existing name or description
@@ -55,7 +58,14 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <DecisionContext.Provider
-      value={{ decisions, addDecision, removeDecision, updateDecision }}
+      value={{
+        decisions,
+        addDecision,
+        removeDecision,
+        updateDecision,
+        fetched,
+        setFetched,
+      }}
     >
       {children}
     </DecisionContext.Provider>
