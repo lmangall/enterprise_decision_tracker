@@ -20,7 +20,7 @@ import { Decision } from "@/types/decision";
 // }
 
 // hardcode the decisions for now
-export default function retrieveDecisions(): Decision[] {
+export default async function retrieveDecisions(): Promise<Decision[]> {
   const decisions: Decision[] = [
     {
       id: 0,

@@ -3,29 +3,32 @@ import retrieveDecisions from "@/context/RetrieveDecisions";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
 
-// Component that loads decisions into the context when the app starts
+// Component that loads decisions into the context when the app starts, only if not already loaded
 const LoadContext: React.FC = () => {
-  const { addDecision } = useDecisionContext();
+  const { decisions, addDecision } = useDecisionContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchDecisions = async () => {
-      try {
-        // Retrieve decisions (hardcoded for now)
-        const decisions: Decision[] = retrieveDecisions();
-        // Load decisions into the context
-        decisions.forEach((decision) => addDecision(decision));
-        setLoading(false);
-      } catch (err) {
-        console.error("Failed to load decisions", err);
-        setError("Failed to load decisions");
-        setLoading(false);
-      }
-    };
+    // Check if decisions are already loaded in the context
+    if (decisions.length === 0) {
+      const fetchDecisions = async () => {
+        try {
+          const fetchedDecisions: Decision[] = await retrieveDecisions();
+          fetchedDecisions.forEach((decision) => addDecision(decision));
+          setLoading(false);
+        } catch (err) {
+          console.error("Failed to load decisions", err);
+          setError("Failed to load decisions");
+          setLoading(false);
+        }
+      };
 
-    fetchDecisions(); // Call the function when the component mounts
-  }, [addDecision]);
+      fetchDecisions();
+    } else {
+      setLoading(false); // no need to load if decisions are already in context
+    }
+  }, [decisions, addDecision]);
 
   if (loading) {
     return <div>Loading decisions...</div>;
@@ -35,7 +38,7 @@ const LoadContext: React.FC = () => {
     return <div>Error: {error}</div>;
   }
 
-  return null; // You can return nothing since this component only loads data
+  return null;
 };
 
 export default LoadContext;
