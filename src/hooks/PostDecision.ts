@@ -13,9 +13,7 @@ export async function createDecision(
 ): Promise<Decision> {
   const client = await db.connect(); // Connect to the database
   try {
-    // Insert the new decision into the database
     const result = await client.sql`
-    SELECT * FROM posts;	
       INSERT INTO decisions (
         golden_ticket, title, description, measurable_goal, status, goal_met, comments, goal_date
       ) VALUES (
@@ -24,12 +22,21 @@ export async function createDecision(
       RETURNING *;
     `;
 
-    // Return the inserted decision, mapping it to the Decision type
-    return result.rows[0] as Decision;
+    //convert date fields to strings
+    const insertedDecision = {
+      ...result.rows[0],
+      created_at: result.rows[0].created_at.toISOString(),
+      updated_at: result.rows[0].updated_at.toISOString(),
+      goal_date: result.rows[0].goal_date
+        ? result.rows[0].goal_date.toISOString()
+        : null,
+    };
+
+    return insertedDecision as Decision;
   } catch (error) {
     console.error("Failed to create decision", error);
     throw error;
   } finally {
-    client.release(); // Release the database connection
+    client.release();
   }
 }
