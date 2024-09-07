@@ -1,6 +1,4 @@
-'use client'
-
-import React from 'react'
+import React from "react";
 import {
   Table,
   TableBody,
@@ -9,9 +7,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { CheckCircle2Icon, XCircleIcon, CircleIcon } from 'lucide-react'
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle2Icon, XCircleIcon, CircleIcon } from "lucide-react";
 
 interface Decision {
   id: number;
@@ -29,9 +27,13 @@ interface Decision {
 
 interface DecisionTableProps {
   decisions: Decision[];
+  onSelectDecision: (decision: Decision) => void;
 }
 
-export function DecisionTable({ decisions }: DecisionTableProps) {
+export default function DecisionTable({
+  decisions,
+  onSelectDecision,
+}: DecisionTableProps) {
   return (
     <Table>
       <TableCaption>A list of your decisions</TableCaption>
@@ -48,7 +50,11 @@ export function DecisionTable({ decisions }: DecisionTableProps) {
       </TableHeader>
       <TableBody>
         {decisions.map((decision) => (
-          <TableRow key={decision.id}>
+          <TableRow
+            key={decision.id}
+            onClick={() => onSelectDecision(decision)}
+            className="cursor-pointer hover:bg-gray-100"
+          >
             <TableCell className="font-medium">{decision.id}</TableCell>
             <TableCell>
               {decision.title}
@@ -61,11 +67,11 @@ export function DecisionTable({ decisions }: DecisionTableProps) {
             <TableCell>
               <Badge
                 variant={
-                  decision.status === 'completed'
-                    ? 'default'
-                    : decision.status === 'in process'
-                    ? 'secondary'
-                    : 'outline'
+                  decision.status === "completed"
+                    ? "default"
+                    : decision.status === "in process"
+                    ? "secondary"
+                    : "outline"
                 }
               >
                 {decision.status}
@@ -80,12 +86,16 @@ export function DecisionTable({ decisions }: DecisionTableProps) {
                 <XCircleIcon className="h-5 w-5 text-red-500" />
               )}
             </TableCell>
-            <TableCell>{decision.goal_date || 'N/A'}</TableCell>
-            <TableCell>{new Date(decision.created_at).toLocaleDateString()}</TableCell>
-            <TableCell>{new Date(decision.updated_at).toLocaleDateString()}</TableCell>
+            <TableCell>{decision.goal_date || "N/A"}</TableCell>
+            <TableCell>
+              {new Date(decision.created_at).toLocaleDateString()}
+            </TableCell>
+            <TableCell>
+              {new Date(decision.updated_at).toLocaleDateString()}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }
