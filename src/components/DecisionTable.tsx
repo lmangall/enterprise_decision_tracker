@@ -115,6 +115,23 @@ DecisionTableProps) {
                     <span>Edit</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => console.log("Delete")}>
+                    {/* 
+                      const onDelete = async 
+    try {
+      
+
+          await deleteDecision(decision.id);
+
+          setToast("Success", "Decision deleted successfully!");
+        } catch (error) {
+          console.error("Failed to delete decision", error);
+          if (error instanceof Error) {
+            setToast("Error", error.message);
+          } else {
+            setToast("Error", "An unknown error occurred");
+          }
+        }
+     */}
                     <Trash2 className="mr-2 h-4 w-4" />
                     <span>Delete</span>
                   </DropdownMenuItem>
