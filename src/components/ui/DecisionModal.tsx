@@ -62,6 +62,8 @@ export default function DecisionModal() {
       addDecision(newDecision);
       console.log("new decision added to context");
 
+      //TODO: modify createDecision to updateDecision: it should update the db relative to the context, it doesn't need to be passed a prop
+      //TODO:__otherwise there is a problem with the id
       await createDecision(newDecision);
       console.log("new decision added to db");
 

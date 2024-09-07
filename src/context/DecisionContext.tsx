@@ -20,6 +20,9 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   const [decisions, setDecisions] = useState<Decision[]>([]);
 
   const addDecision = (decision: Decision) => {
+    //TODO: add validation: check for existing name or description
+    //TODO: add validation: check for existing measurable goal
+    //TODO: it should assign a unique id to the decision
     setDecisions((prevDecisions) => {
       const updatedDecisions = [...prevDecisions, decision];
       console.log("Added decision:", decision);

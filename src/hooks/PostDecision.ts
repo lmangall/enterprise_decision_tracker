@@ -7,6 +7,7 @@ import { db } from "@vercel/postgres";
 import { NewDecision, Decision } from "@/types/decision";
 
 // Put on db
+//TODO: modify createDecision to updateDecision: it should update the db relative to the context, it doesn't need to be passed a prop
 export async function createDecision(
   newDecision: NewDecision
 ): Promise<Decision> {
