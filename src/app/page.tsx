@@ -19,9 +19,12 @@ export default function Home() {
 
   // Define showToast to handle both title and message
   const showToast = (title: string, message: string) => {
+    const variant = title === "Error" ? "error" : "default";
+
     toast({
       title: title,
       description: message,
+      variant: variant,
     });
   };
 
