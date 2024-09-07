@@ -16,11 +16,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
+import { useDecisionContext } from "@/context/DecisionContext";
+import { createDecision } from "@/hooks/PostDecision";
+import { add } from "cypress/types/lodash";
 
 type FormData = {
   title: string;
   description: string;
-  priority: string;
+  // priority: string;
   measurableGoal: string;
   targetDate: Date | null;
   status: string;
@@ -29,11 +32,12 @@ type FormData = {
 export default function DecisionModal() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const { addDecision } = useDecisionContext();
   const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
       title: "",
       description: "",
-      priority: "",
+      // priority: "",
       measurableGoal: "",
       targetDate: null,
       status: "",
@@ -43,10 +47,28 @@ export default function DecisionModal() {
   const targetDate = watch("targetDate");
 
   const onSubmit = (data: FormData) => {
-    console.log("Form submitted:", data);
-    // update context and send to db
-    setIsFormVisible(false);
-  };
+    try {
+      const newDecision = {
+    golden_ticket: false,
+    title: data.title,
+    description: data.description,
+    measurable_goal: data.measurableGoal,
+    status: data.status,
+    goal_met: false,
+    comments: "",
+    goal_date: data.targetDate,
+      };
+      console.log("submitting new decision to context", newDecision);
+      addDecision(newDecision);
+      console.log("new decision added to context");
+
+      await createDecision(newDecision);
+      console.log("new decision added to db");
+
+      setIsFormVisible(false);
+    } catch (error) {
+      console.error("Error creating decision:", error);
+    }
 
   return (
     <div className="relative">
@@ -97,7 +119,7 @@ export default function DecisionModal() {
                   )}
                 />
               </div>
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="priority">Priority</Label>
                 <Controller
                   name="priority"
@@ -116,7 +138,7 @@ export default function DecisionModal() {
                     </Select>
                   )}
                 />
-              </div>
+              </div> */}
               <div className="space-y-2">
                 <Label htmlFor="measurableGoal">Measurable Goal</Label>
                 <Controller

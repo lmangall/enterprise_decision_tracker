@@ -1,13 +1,19 @@
-import { sql } from "@vercel/postgres";
+// This component could both add to db and context but it's good practice to separate server-side code and client-side state
+// Furthermore, with "use server" React context (useContext) is not accessible
+
+"use server";
+
+import { db } from "@vercel/postgres";
 import { NewDecision, Decision } from "@/types/decision";
 
 // Put on db
 export async function createDecision(
   newDecision: NewDecision
 ): Promise<Decision> {
+  const client = await db.connect(); // Connect to the database
   try {
     // Insert the new decision into the database
-    const result = await sql`
+    const result = await client.sql`
       INSERT INTO decisions (
         golden_ticket, title, description, measurable_goal, status, goal_met, comments, goal_date
       ) VALUES (
@@ -21,5 +27,7 @@ export async function createDecision(
   } catch (error) {
     console.error("Failed to create decision", error);
     throw error;
+  } finally {
+    client.release(); // Release the database connection
   }
 }

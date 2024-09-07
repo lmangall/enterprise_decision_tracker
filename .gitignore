@@ -41,3 +41,7 @@ next-env.d.ts
 # Cypress
 cypress/videos
 cypress/screenshots
+
+# temp dev
+src/hooks/DeleteDecision
+src/hooks/EditDecision

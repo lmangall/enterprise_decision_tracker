@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "types": ["react", "node", "cypress"],
+    "jsx": "preserve",
+    "types": [
+      "react",
+      "node",
+      "cypress"
+    ],
     "target": "es6",
     "lib": [
       "dom",
@@ -36,8 +40,10 @@
   "include": [
     "src/**/*",
     ".next/types/**/*.ts",
-    "cypress/**/*.ts"
-, "src/components/.EditDecision.ts", "src/components/.DeleteDecision.ts"  ],
+    "cypress/**/*.ts",
+    "src/components/.EditDecision.ts",
+    "src/components/.DeleteDecision.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
