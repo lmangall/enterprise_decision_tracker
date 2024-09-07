@@ -17,26 +17,26 @@ const LoadContext: React.FC = () => {
       return;
     }
 
-    // Check if decisions are already loaded in the context
-    if (!fetched) {
-      const fetchDecisions = async () => {
-        try {
-          const fetchedDecisions: Decision[] = await retrieveDecisions();
-          fetchedDecisions.forEach((decision) => addDecision(decision));
-          setFetched(true); // Mark as fetched after successful loading
-          setLoading(false);
-        } catch (err) {
-          console.error("Failed to load decisions", err);
-          setError("Failed to load decisions");
-          setLoading(false);
-        }
-      };
+    const fetchDecisions = async () => {
+      try {
+        const fetchedDecisions: Decision[] = await retrieveDecisions();
+        fetchedDecisions.forEach((decision) => addDecision(decision));
+        setFetched(true); // Mark as fetched after successful loading
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to load decisions", err);
+        setError("Failed to load decisions");
+        setLoading(false);
+      }
+    };
 
-      fetchDecisions();
+    if (!fetched) {
+      fetchDecisions(); // fetch only if decisions are not already loaded
     } else {
-      setLoading(false); // no need to load if decisions are already in context
+      setLoading(false); // Set loading to false if decisions are in context
     }
-  }, [decisions, addDecision]);
+    isMounted.current = true;
+  }, [fetched, addDecision, setFetched]);
 
   if (loading) {
     return <div>Loading decisions...</div>;
