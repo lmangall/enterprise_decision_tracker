@@ -1,6 +1,7 @@
 import React from "react";
 import { deleteDecision } from "@/hooks/DeleteDecision";
-import { DecisionContext } from "@/context/DecisionContext";
+import { toast, useToast } from "@/hooks/use-toast";
+import { useDecisionContext } from "@/context/DecisionContext";
 import {
   Table,
   TableBody,
@@ -44,56 +45,40 @@ interface DecisionTableProps {
   decisions: Decision[];
   //TODO: Add special effects if selected is "take leo onboard"
   onSelectDecision: (decision: Decision) => void;
-  // onEditDecision: (decision: Decision) => void;
-  // onDeleteDecision: (decision: Decision) => void;
 }
 
 export default function DecisionTable({
   decisions,
   onSelectDecision,
-}: // onEditDecision,
-// onDeleteDecision,
-DecisionTableProps) {
-  {
-    // const [decisions, setDecisions] = useState<Decision[]>(initialDecisions);
-    const callDeleteDecision = async (decision: Decision) => {
-      try {
-        await deleteDecision(decision.id);
+}: DecisionTableProps) {
+  const { removeDecision } = useDecisionContext();
 
-        DecisionContext.removeDecision(decision.id);
-
-        setDecisions((prevDecisions) =>
-          prevDecisions.filter((decision) => decision.id !== decisionId)
-        );
-
-        setToast("Success", "Decision deleted successfully!");
-      } catch (error) {
-        console.error("Failed to delete decision", error);
-        if (error instanceof Error) {
-          setToast("Error", error.message);
-        } else {
-          setToast("Error", "An unknown error occurred");
-        }
-      }
-
-    /* 
-                      const onDelete = async 
+  const handleDelete = async (decision: Decision) => {
     try {
-      
-
-          await deleteDecision(decision.id);
-
-          setToast("Success", "Decision deleted successfully!");
-        } catch (error) {
-          console.error("Failed to delete decision", error);
-          if (error instanceof Error) {
-            setToast("Error", error.message);
-          } else {
-            setToast("Error", "An unknown error occurred");
-          }
-        }
-     */
-  }
+      await deleteDecision(decision.id);
+      removeDecision(decision.id); // remove decision the context
+      console.log("Decision deleted successfully");
+      toast({
+        title: "Success",
+        description: "Decision deleted successfully",
+      });
+    } catch (error) {
+      console.error("Failed to delete decision", error);
+      if (error instanceof Error) {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "error",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete decision",
+          variant: "error",
+        });
+      }
+    }
+  };
 
   return (
     <Table>
@@ -158,24 +143,7 @@ DecisionTableProps) {
                     <Pencil className="mr-2 h-4 w-4" />
                     <span>Edit</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => console.log("Delete")}>
-                    {/* 
-                      const onDelete = async 
-    try {
-      
-
-          await deleteDecision(decision.id);
-
-          setToast("Success", "Decision deleted successfully!");
-        } catch (error) {
-          console.error("Failed to delete decision", error);
-          if (error instanceof Error) {
-            setToast("Error", error.message);
-          } else {
-            setToast("Error", "An unknown error occurred");
-          }
-        }
-     */}
+                  <DropdownMenuItem onClick={() => handleDelete(decision)}>
                     <Trash2 className="mr-2 h-4 w-4" />
                     <span>Delete</span>
                   </DropdownMenuItem>
