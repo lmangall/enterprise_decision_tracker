@@ -28,14 +28,10 @@ type FormData = {
 };
 
 type DecisionModalProps = {
-  setToastMessage: Dispatch<SetStateAction<string | null>>;
-  setToastTitle: Dispatch<SetStateAction<string | null>>;
+  setToast: (title: string, message: string) => void;
 };
 
-export default function DecisionModal({
-  setToastMessage,
-  setToastTitle,
-}: DecisionModalProps) {
+export default function DecisionModal({ setToast }: DecisionModalProps) {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { addDecision } = useDecisionContext();
@@ -70,15 +66,13 @@ export default function DecisionModal({
       await createDecision(newDecision);
 
       setIsFormVisible(false);
-      setToastTitle("Success");
-      setToastMessage("Decision created successfully!");
+      setToast("Success", "Decision created successfully!");
     } catch (error) {
       console.error("Failed to create decision", error);
       if (error instanceof Error) {
-        setToastTitle("Error");
-        setToastMessage(error.message);
+        setToast("Error", error.message);
       } else {
-        setToastMessage("An unknown error occurred");
+        setToast("Error", "An unknown error occurred");
       }
     }
   };

@@ -34,10 +34,7 @@ export default function Home() {
               <h1 className="text-xl font-semibold">Decision Dashboard</h1>
               <div className="flex md:w-1/3">
                 <DecisionModal
-                  setToastMessage={(message) => showToast("Success", message)}
-                  setToastTitle={(title) =>
-                    showToast(title, "An action has been performed")
-                  } // Adjust as needed
+                  setToast={(title, message) => showToast(title, message)}
                 />
                 <Button
                   onClick={() => {
