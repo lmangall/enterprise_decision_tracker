@@ -15,11 +15,11 @@ interface DecisionTabsProps {
 const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
   return (
     <Tabs defaultValue="details">
-      <TabsList className="grid w-full grid-cols-2 p-2">
+      <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="details">Details</TabsTrigger>
         <TabsTrigger value="about">About</TabsTrigger>
       </TabsList>
-      <TabsContent value="details" className="max-h-96">
+      <TabsContent value="details" className="max-h-96 overflow-y-auto">
         <Card>
           <CardHeader>
             <CardTitle>Decision Details</CardTitle>
@@ -51,7 +51,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
           </CardContent>
         </Card>
       </TabsContent>
-      <TabsContent value="about" className="max-h-96">
+      <TabsContent value="about" className="max-h-96 overflow-y-auto">
         <Card>
           <CardHeader>
             <CardTitle>About</CardTitle>
@@ -60,11 +60,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p>
-              The Decision Dashboard helps you track and manage important
-              decisions. Use this tool to set goals, monitor progress, and
-              evaluate outcomes.
-            </p>
+            <p>The Dec</p>
           </CardContent>
         </Card>
       </TabsContent>
