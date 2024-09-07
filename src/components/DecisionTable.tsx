@@ -2,7 +2,7 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -36,16 +36,16 @@ export default function DecisionTable({
 }: DecisionTableProps) {
   return (
     <Table>
-      <TableCaption>A list of your decisions</TableCaption>
+      {/* <TableCaption>A list of your decisions</TableCaption> */}
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[50px]">ID</TableHead>
+          <TableHead>ID</TableHead>
           <TableHead>Title</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Goal Met</TableHead>
           <TableHead>Goal Date</TableHead>
-          <TableHead>Created At</TableHead>
-          <TableHead>Updated At</TableHead>
+          {/* <TableHead>Created At</TableHead>
+          <TableHead>Updated At</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -87,12 +87,12 @@ export default function DecisionTable({
               )}
             </TableCell>
             <TableCell>{decision.goal_date || "N/A"}</TableCell>
-            <TableCell>
+            {/* <TableCell>
               {new Date(decision.created_at).toLocaleDateString()}
             </TableCell>
             <TableCell>
               {new Date(decision.updated_at).toLocaleDateString()}
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>
