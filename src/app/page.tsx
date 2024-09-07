@@ -10,8 +10,6 @@ import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs"; // Import the new component
 
 export default function Home() {
-  const [result, setResult] = useState<Decision | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const { decisions } = useDecisionContext();
   const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
     null
