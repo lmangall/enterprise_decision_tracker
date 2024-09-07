@@ -1,6 +1,5 @@
 import React from "react";
 import { deleteDecision } from "@/hooks/DeleteDecision";
-import { editDecision } from "@/hooks/EditDecision";
 import { toast, useToast } from "@/hooks/use-toast";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
@@ -128,8 +127,12 @@ export default function DecisionTable({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => console.log("Edit")}>
-                    //TODO: open a modal
+                  <DropdownMenuItem
+                    onClick={() => console.log("Edit")}
+                    disabled
+                  >
+                    {/* //TODO: open a modal */}
+
                     <Pencil className="mr-2 h-4 w-4" />
                     <span>Edit</span>
                   </DropdownMenuItem>

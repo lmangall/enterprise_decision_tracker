@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { createDecision } from "@/hooks/PostDecision";
 
+//TODO: import the type instead of defining it here
 type FormData = {
   title: string;
   description: string;
