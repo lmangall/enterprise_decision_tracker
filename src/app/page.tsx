@@ -62,7 +62,7 @@ export default function Home() {
                 <CardHeader>
                   <CardTitle>Decision Details</CardTitle>
                   <CardDescription>
-                    View the selected decision'&apos;s details
+                    View the selected decision&#39;s details{" "}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
