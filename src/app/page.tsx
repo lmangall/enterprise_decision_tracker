@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createDecision } from "@/hooks/PostDecision";
 import { NewDecision, Decision } from "@/types/decision";
 import DecisionModal from "@/components/ui/DecisionModal";
+import { DecisionTable } from "@/components/DecisionTable";
 
 // Create a NewDecision object
 const newDecision: NewDecision = {
@@ -16,6 +17,35 @@ const newDecision: NewDecision = {
   comments: "Some comments",
   goal_date: "2024-09-07T00:00:00Z",
 };
+
+const decisions: Decision[] = [
+  {
+    id: 1,
+    golden_ticket: true,
+    title: "Sample Decision",
+    description: "not from context",
+    measurable_goal: "Achieve X",
+    status: "pending",
+    goal_met: false,
+    comments: "Some comments",
+    goal_date: "2024-09-07T00:00:00Z",
+    created_at: "2024-09-07T00:00:00Z",
+    updated_at: "2024-09-07T00:00:00Z",
+  },
+  {
+    id: 2,
+    golden_ticket: false,
+    title: "Another Decision",
+    description: "not from context 2",
+    measurable_goal: "Achieve Y",
+    status: "in process",
+    goal_met: false,
+    comments: "Some comments",
+    goal_date: "2024-09-07T00:00:00Z",
+    created_at: "2024-09-07T00:00:00Z",
+    updated_at: "2024-09-07T00:00:00Z",
+  },
+];
 
 export default function Home() {
   const [result, setResult] = useState<Decision | null>(null);
@@ -41,6 +71,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <main className="flex flex-col items-center justify-center flex-grow">
+        <DecisionTable decisions={decisions} />
         <button
           onClick={handleCreateDecision}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
