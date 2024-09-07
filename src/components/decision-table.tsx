@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import {
   Table,
@@ -15,14 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  CheckCircle2Icon,
-  XCircleIcon,
-  CircleIcon,
-  MoreVertical,
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { CheckCircle2Icon, XCircleIcon, CircleIcon, MoreVertical, Pencil, Trash2 } from "lucide-react";
 
 interface Decision {
   id: number;
@@ -45,7 +40,7 @@ interface DecisionTableProps {
   onDeleteDecision: (decision: Decision) => void;
 }
 
-export default function DecisionTable({
+export function DecisionTable({
   decisions,
   onSelectDecision,
   onEditDecision,
@@ -98,9 +93,7 @@ export default function DecisionTable({
                 <XCircleIcon className="h-5 w-5 text-red-500" />
               )}
             </TableCell>
-            <TableCell onClick={() => onSelectDecision(decision)}>
-              {decision.goal_date || "N/A"}
-            </TableCell>
+            <TableCell onClick={() => onSelectDecision(decision)}>{decision.goal_date || "N/A"}</TableCell>
             <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
