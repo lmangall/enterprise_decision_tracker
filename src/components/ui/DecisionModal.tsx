@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,6 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { createDecision } from "@/hooks/PostDecision";
-import { Toast, ToastTitle, ToastDescription } from "@/components/ui/toast";
 
 type FormData = {
   title: string;
@@ -28,7 +27,11 @@ type FormData = {
   status: "pending" | "in process" | "completed";
 };
 
-export default function DecisionModal() {
+type DecisionModalProps = {
+  setToastMessage: Dispatch<SetStateAction<string | null>>;
+};
+
+export default function DecisionModal({ setToastMessage }: DecisionModalProps) {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { addDecision } = useDecisionContext();
@@ -59,24 +62,17 @@ export default function DecisionModal() {
         goal_date: data.targetDate?.toISOString(),
       };
 
-      console.log("submitting new decision to context", newDecision);
       await addDecision(newDecision);
-      console.log("new decision added to context");
-
-      //TODO: modify createDecision to updateDecision: it should update the db relative to the context, it doesn't need to be passed a prop
-      //TODO:__otherwise there is a problem with the id
       await createDecision(newDecision);
-      console.log("new decision added to db");
 
       setIsFormVisible(false);
     } catch (error) {
-      console.error("Error creating decision:", error);
-      // Should I also set an error message here?
-      // setErrorMessage(error.message);
-      <Toast variant="destructive">
-        <ToastTitle>Error</ToastTitle>
-        <ToastDescription>error</ToastDescription>
-      </Toast>;
+      console.error("Failed to create decision", error);
+      if (error instanceof Error) {
+        setToastMessage("Error creating decision: " + error.message);
+      } else {
+        setToastMessage("An unknown error occurred");
+      }
     }
   };
 

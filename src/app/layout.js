@@ -1,5 +1,6 @@
 import "./globals.css";
-import { DecisionProvider } from "../context/DecisionContext"; // Adjust the path if needed
+import { DecisionProvider } from "../context/DecisionContext";
+import { Toaster } from "@/components/ui/toast";
 
 export const metadata = {
   title: "Decision Tracker",
@@ -8,10 +9,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <DecisionProvider>
-      <html lang="en">
+    <html lang="en">
+      <DecisionProvider>
         <body>{children}</body>
-      </html>
-    </DecisionProvider>
+      </DecisionProvider>
+    </html>
   );
 }
