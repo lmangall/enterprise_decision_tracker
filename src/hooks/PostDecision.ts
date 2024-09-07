@@ -15,6 +15,7 @@ export async function createDecision(
   try {
     // Insert the new decision into the database
     const result = await client.sql`
+    SELECT * FROM posts;	
       INSERT INTO decisions (
         golden_ticket, title, description, measurable_goal, status, goal_met, comments, goal_date
       ) VALUES (
