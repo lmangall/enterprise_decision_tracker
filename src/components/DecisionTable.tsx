@@ -41,16 +41,16 @@ interface Decision {
 interface DecisionTableProps {
   decisions: Decision[];
   onSelectDecision: (decision: Decision) => void;
-  onEditDecision: (decision: Decision) => void;
-  onDeleteDecision: (decision: Decision) => void;
+  // onEditDecision: (decision: Decision) => void;
+  // onDeleteDecision: (decision: Decision) => void;
 }
 
 export default function DecisionTable({
   decisions,
   onSelectDecision,
-  onEditDecision,
-  onDeleteDecision,
-}: DecisionTableProps) {
+}: // onEditDecision,
+// onDeleteDecision,
+DecisionTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -110,11 +110,11 @@ export default function DecisionTable({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => onEditDecision(decision)}>
+                  <DropdownMenuItem onClick={() => console.log("Edit")}>
                     <Pencil className="mr-2 h-4 w-4" />
                     <span>Edit</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => onDeleteDecision(decision)}>
+                  <DropdownMenuItem onClick={() => console.log("Delete")}>
                     <Trash2 className="mr-2 h-4 w-4" />
                     <span>Delete</span>
                   </DropdownMenuItem>
