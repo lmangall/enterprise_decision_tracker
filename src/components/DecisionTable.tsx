@@ -3,7 +3,8 @@ import { deleteDecision } from "@/hooks/DeleteDecision";
 import { toast, useToast } from "@/hooks/use-toast";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
-import EditDecision from "@/components/modals/EditDecision"; // Correct import
+import { EditDecision } from "@/components/modals/EditDecision";
+import { format } from "date-fns";
 import {
   Table,
   TableBody,
@@ -114,7 +115,11 @@ export default function DecisionTable({
               )}
             </TableCell>
             <TableCell onClick={() => onSelectDecision(decision)}>
-              {decision.goal_date || "N/A"}
+              {decision.goal_date
+                ? typeof decision.goal_date === "string"
+                  ? decision.goal_date
+                  : format(new Date(decision.goal_date), "PP") // Format the Date as a string
+                : "N/A"}
             </TableCell>
             <TableCell>
               <DropdownMenu>

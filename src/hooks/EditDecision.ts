@@ -6,6 +6,13 @@ import { Decision } from "@/types/decision";
 
 export async function editDecision(decision: Decision): Promise<boolean> {
   const client = await db.connect();
+
+  const formattedGoalDate = decision.goal_date
+    ? typeof decision.goal_date === "string"
+      ? decision.goal_date
+      : decision.goal_date.toISOString().split("T")[0] // Format Date as 'YYYY-MM-DD'
+    : null;
+
   try {
     const result = await client.sql`
       UPDATE decisions
@@ -17,7 +24,7 @@ export async function editDecision(decision: Decision): Promise<boolean> {
         status = ${decision.status},
         goal_met = ${decision.goal_met},
         comments = ${decision.comments},
-        goal_date = ${decision.goal_date},
+    goal_date = ${formattedGoalDate},
         updated_at = NOW()
       WHERE id = ${decision.id}
       RETURNING id;

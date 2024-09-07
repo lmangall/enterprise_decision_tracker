@@ -161,10 +161,10 @@ export function EditDecision({ decision }: EditDecisionProps) {
                   <div className="absolute z-10 bg-white border rounded-md shadow-md mt-1">
                     <Calendar
                       mode="single"
-                      selected={goalDate ?? undefined}
+                      selected={goalDate ? new Date(goalDate) : undefined}
                       onSelect={(date) => {
                         if (date) {
-                          setValue("goal_date", date);
+                          setValue("goal_date", format(date, "yyyy-MM-dd"));
                         }
                         setIsCalendarOpen(false);
                       }}
