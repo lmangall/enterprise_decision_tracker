@@ -18,15 +18,13 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { createDecision } from "@/hooks/PostDecision";
-import { add } from "cypress/types/lodash";
 
 type FormData = {
   title: string;
   description: string;
-  // priority: string;
   measurableGoal: string;
   targetDate: Date | null;
-  status: string;
+  status: "pending" | "in process" | "completed";
 };
 
 export default function DecisionModal() {
@@ -37,27 +35,29 @@ export default function DecisionModal() {
     defaultValues: {
       title: "",
       description: "",
-      // priority: "",
       measurableGoal: "",
       targetDate: null,
-      status: "",
+      status: "pending",
     },
   });
 
   const targetDate = watch("targetDate");
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     try {
       const newDecision = {
-    golden_ticket: false,
-    title: data.title,
-    description: data.description,
-    measurable_goal: data.measurableGoal,
-    status: data.status,
-    goal_met: false,
-    comments: "",
-    goal_date: data.targetDate,
+        id: 0,
+        created_at: "",
+        updated_at: "",
+        golden_ticket: false,
+        title: data.title,
+        description: data.description,
+        measurable_goal: data.measurableGoal,
+        status: data.status,
+        goal_met: false,
+        goal_date: data.targetDate?.toISOString(),
       };
+
       console.log("submitting new decision to context", newDecision);
       addDecision(newDecision);
       console.log("new decision added to context");
@@ -69,6 +69,7 @@ export default function DecisionModal() {
     } catch (error) {
       console.error("Error creating decision:", error);
     }
+  };
 
   return (
     <div className="relative">
@@ -119,26 +120,6 @@ export default function DecisionModal() {
                   )}
                 />
               </div>
-              {/* <div className="space-y-2">
-                <Label htmlFor="priority">Priority</Label>
-                <Controller
-                  name="priority"
-                  control={control}
-                  rules={{ required: "Priority is required" }}
-                  render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select priority" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="high">High</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="low">Low</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </div> */}
               <div className="space-y-2">
                 <Label htmlFor="measurableGoal">Measurable Goal</Label>
                 <Controller
@@ -202,7 +183,7 @@ export default function DecisionModal() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="in-progress">In Progress</SelectItem>
+                        <SelectItem value="in process">In Process</SelectItem>
                         <SelectItem value="completed">Completed</SelectItem>
                       </SelectContent>
                     </Select>
