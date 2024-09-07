@@ -17,7 +17,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
     <Tabs defaultValue="details">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="details">Detail</TabsTrigger>
-        <TabsTrigger value="about">About</TabsTrigger>
+        <TabsTrigger value="about">AI Help</TabsTrigger>
       </TabsList>
       <TabsContent value="details" className="max-h-96 overflow-y-auto">
         <Card>
@@ -54,13 +54,13 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
       <TabsContent value="about" className="max-h-96 overflow-y-auto">
         <Card>
           <CardHeader>
-            <CardTitle>About</CardTitle>
+            <CardTitle>AI Help</CardTitle>
             <CardDescription>
-              Information about the Decision Dashboard
+              Get help from AI to achieve your goals and crush those KPIs!{" "}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p>The Dec</p>
+            <p>Something here</p>
           </CardContent>
         </Card>
       </TabsContent>
