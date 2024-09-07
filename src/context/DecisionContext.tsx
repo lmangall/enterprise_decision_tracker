@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useContext } from "react";
 import { Decision } from "../types/decision";
 
 interface DecisionContextProps {
@@ -20,21 +20,34 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   const [decisions, setDecisions] = useState<Decision[]>([]);
 
   const addDecision = (decision: Decision) => {
-    setDecisions((prevDecisions) => [...prevDecisions, decision]);
+    setDecisions((prevDecisions) => {
+      const updatedDecisions = [...prevDecisions, decision];
+      console.log("Added decision:", decision);
+      console.log("Current context decisions:", updatedDecisions);
+      return updatedDecisions;
+    });
   };
 
   const removeDecision = (id: number) => {
-    setDecisions((prevDecisions) =>
-      prevDecisions.filter((decision) => decision.id !== id)
-    );
+    setDecisions((prevDecisions) => {
+      const updatedDecisions = prevDecisions.filter(
+        (decision) => decision.id !== id
+      );
+      console.log("Removed decision with id:", id);
+      console.log("Current context decisions:", updatedDecisions);
+      return updatedDecisions;
+    });
   };
 
   const updateDecision = (updatedDecision: Decision) => {
-    setDecisions((prevDecisions) =>
-      prevDecisions.map((decision) =>
+    setDecisions((prevDecisions) => {
+      const updatedDecisions = prevDecisions.map((decision) =>
         decision.id === updatedDecision.id ? updatedDecision : decision
-      )
-    );
+      );
+      console.log("Updated decision:", updatedDecision);
+      console.log("Current context decisions:", updatedDecisions);
+      return updatedDecisions;
+    });
   };
 
   return (
@@ -44,4 +57,15 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
       {children}
     </DecisionContext.Provider>
   );
+};
+
+// Custom hook to use the DecisionContext
+export const useDecisionContext = () => {
+  const context = useContext(DecisionContext);
+  if (context === undefined) {
+    throw new Error(
+      "useDecisionContext must be used within a DecisionProvider"
+    );
+  }
+  return context;
 };
