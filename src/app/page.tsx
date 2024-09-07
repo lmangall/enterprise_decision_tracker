@@ -27,20 +27,20 @@ export default function Home() {
   );
 
   return (
-    <div className="flex min-h-screen">
-      <nav className="w-16 bg-gray-100 flex flex-col items-center py-4 space-y-4">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <nav className="fixed left-0 top-0 bottom-0 w-16 bg-gray-100 flex flex-col items-center py-4 space-y-4">
         <Button variant="ghost" size="icon">
-          <PlusIcon className="h-6 w-6" />
+          <PlusIcon className="h-5 w-5" />
         </Button>
         <Button variant="ghost" size="icon">
-          <AtSignIcon className="h-6 w-6" />
+          <AtSignIcon className="h-5 w-5" />
         </Button>
         <Button variant="ghost" size="icon">
-          <UserIcon className="h-6 w-6" />
+          <UserIcon className="h-5 w-5" />
         </Button>
       </nav>
-      <main className="flex-grow flex">
-        <div className="w-2/3 p-6">
+      <main className="flex flex-row rounded-xl border shadow">
+        <div className="flex-grow p-6">
           <h1 className="text-3xl font-bold mb-2">Decision Dashboard</h1>
           <p className="text-gray-600 mb-6">Track and manage your decisions</p>
           <LoadContext />
@@ -49,7 +49,7 @@ export default function Home() {
             onSelectDecision={(decision) => setSelectedDecision(decision)}
           />
         </div>
-        <div className="w-1/3 bg-gray-50 p-6">
+        <div className="bg-gray-50 p-6 flex-shrink-0">
           <Tabs defaultValue="details">
             <TabsList className="mb-4">
               <TabsTrigger value="details">Details</TabsTrigger>
