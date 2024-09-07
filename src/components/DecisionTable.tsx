@@ -1,5 +1,6 @@
 import React from "react";
 import { deleteDecision } from "@/hooks/DeleteDecision";
+import { editDecision } from "@/hooks/EditDecision";
 import { toast, useToast } from "@/hooks/use-toast";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
@@ -42,6 +43,7 @@ export default function DecisionTable({
 
   const handleDelete = async (decision: Decision) => {
     try {
+      //TODO: is it correct to do db first, context second?
       await deleteDecision(decision.id);
       removeDecision(decision.id); // remove decision the context
       console.log("Decision deleted successfully");
@@ -127,6 +129,7 @@ export default function DecisionTable({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={() => console.log("Edit")}>
+                    //TODO: open a modal
                     <Pencil className="mr-2 h-4 w-4" />
                     <span>Edit</span>
                   </DropdownMenuItem>

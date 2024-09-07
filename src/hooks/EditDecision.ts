@@ -2,8 +2,7 @@
 import { db } from "@vercel/postgres";
 import { Decision } from "@/types/decision";
 
-//TODO: validation has to be client side (context), in a parent component
-// import { isDuplicateDecision } from "@/components/utils/validation";
+//Validation is done on the client side (context), in a parent component to prevent unnecessary calls to the backend
 
 export async function editDecision(decision: Decision): Promise<boolean> {
   const client = await db.connect();
