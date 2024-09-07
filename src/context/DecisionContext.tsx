@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, ReactNode, useContext } from "react";
 import { Decision } from "../types/decision";
+import { isDuplicateDecision } from "../components/utils/validation";
 
 interface DecisionContextProps {
   decisions: Decision[];
@@ -25,20 +26,10 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   const addDecision = (decision: Decision) => {
     return new Promise<void>((resolve, reject) => {
       setDecisions((prevDecisions) => {
-        // Validation: check for existing name or description or measurable goal
-        const isDuplicate = prevDecisions.some(
-          (existingDecision) =>
-            existingDecision.title.toLowerCase() ===
-              decision.title.toLowerCase() ||
-            existingDecision.description.toLowerCase() ===
-              decision.description.toLowerCase() ||
-            existingDecision.measurable_goal.toLowerCase() ===
-              decision.measurable_goal.toLowerCase()
-        );
-
-        if (isDuplicate) {
+        // Use validation function to check for duplicates
+        if (isDuplicateDecision(decision, prevDecisions)) {
           reject(new Error("A decision with similar details already exists."));
-          return prevDecisions; // Return the previous state without adding the new decision
+          return prevDecisions; // return the previous state without adding the new decision
         }
 
         // Assign a unique id to the decision: +1 to the last id
