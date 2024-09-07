@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import retrieveDecisions from "@/context/RetrieveDecisions";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
@@ -8,8 +8,15 @@ const LoadContext: React.FC = () => {
   const { decisions, addDecision, fetched, setFetched } = useDecisionContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isMounted = useRef(false); // to track component mounting
 
   useEffect(() => {
+    //TODO: see if the setFetched flag is necesseary since tracking mounted state
+    if (isMounted.current) {
+      // Skip fetching if already mounted
+      return;
+    }
+
     // Check if decisions are already loaded in the context
     if (!fetched) {
       const fetchDecisions = async () => {
