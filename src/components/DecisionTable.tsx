@@ -2,6 +2,7 @@ import React from "react";
 import { deleteDecision } from "@/hooks/DeleteDecision";
 import { toast, useToast } from "@/hooks/use-toast";
 import { useDecisionContext } from "@/context/DecisionContext";
+import { Decision } from "@/types/decision";
 import {
   Table,
   TableBody,
@@ -26,20 +27,6 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
-
-interface Decision {
-  id: number;
-  golden_ticket: boolean;
-  title: string;
-  description: string;
-  measurable_goal: string;
-  status: "pending" | "in process" | "completed";
-  goal_met?: boolean;
-  comments?: string;
-  goal_date?: string;
-  created_at: string;
-  updated_at: string;
-}
 
 interface DecisionTableProps {
   decisions: Decision[];
