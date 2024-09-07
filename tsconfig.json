@@ -39,6 +39,7 @@
   },
   "include": [
     "src/**/*",
+    "src/*",
     ".next/types/**/*.ts",
     "cypress/**/*.ts",
     "src/components/.EditDecision.ts",

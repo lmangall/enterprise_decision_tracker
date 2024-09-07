@@ -7,13 +7,15 @@ export const metadata = {
   description: "Get your decisions in order",
 };
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <DecisionProvider>
-        <body>{children}</body>
-        <Toaster />
-      </DecisionProvider>
+    <html>
+      <body>
+        <DecisionProvider>
+          {children}
+          <Toaster />
+        </DecisionProvider>
+      </body>
     </html>
   );
 }
