@@ -18,6 +18,7 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { createDecision } from "@/hooks/PostDecision";
+import { Toast, ToastTitle, ToastDescription } from "@/components/ui/toast";
 
 type FormData = {
   title: string;
@@ -59,7 +60,7 @@ export default function DecisionModal() {
       };
 
       console.log("submitting new decision to context", newDecision);
-      addDecision(newDecision);
+      await addDecision(newDecision);
       console.log("new decision added to context");
 
       //TODO: modify createDecision to updateDecision: it should update the db relative to the context, it doesn't need to be passed a prop
@@ -70,6 +71,12 @@ export default function DecisionModal() {
       setIsFormVisible(false);
     } catch (error) {
       console.error("Error creating decision:", error);
+      // Should I also set an error message here?
+      // setErrorMessage(error.message);
+      <Toast variant="destructive">
+        <ToastTitle>Error</ToastTitle>
+        <ToastDescription>error</ToastDescription>
+      </Toast>;
     }
   };
 
