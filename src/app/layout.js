@@ -1,6 +1,6 @@
 import "./globals.css";
 import { DecisionProvider } from "../context/DecisionContext";
-import { Toaster } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Decision Tracker",
@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <DecisionProvider>
         <body>{children}</body>
+        <Toaster />
       </DecisionProvider>
     </html>
   );

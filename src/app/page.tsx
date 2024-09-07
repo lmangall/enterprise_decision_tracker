@@ -77,7 +77,6 @@ export default function Home() {
           </Toast>
         )}
       </div>
-      <Toaster />
     </div>
   );
 }
