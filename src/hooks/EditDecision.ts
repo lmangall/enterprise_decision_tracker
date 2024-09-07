@@ -1,36 +1,28 @@
-// EditDecision.ts
-import { useContext } from "react";
-import { DecisionContext } from "@/context/DecisionContext";
+"use server";
+import { db } from "@vercel/postgres";
+import { Decision } from "@/types/decision";
 
-interface UpdatedGoal {
-  id: number;
-  title: string;
-  description: string;
-  measurableGoal: string;
-  status: "Pending" | "Completed";
-  goalMet: boolean;
-  comments?: string;
-  targetDate?: string;
-  goldenTicket: boolean;
-}
-
-export async function editDecision(updatedGoal: UpdatedGoal) {
-  const { updateGoal } = useContext(DecisionContext);
+//TODO: validation
+export async function editDecision(decision: Decision): Promise<boolean> {
+  const client = await db.connect();
   try {
-    // Replace with your actual API call
-    const response = await fetch(`/api/goals/${updatedGoal.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedGoal),
-    });
+    const result = await client.sql`
+      DELETE FROM decisions
+      WHERE id = ${decision.id}
+      RETURNING id;
+    `;
 
-    if (!response.ok) throw new Error("Failed to update goal");
+    if (result.rowCount === 0) {
+      console.error(`No decision found with id ${decision.id}`);
+      return false;
+    }
 
-    const goal = await response.json();
-    updateGoal(goal);
+    console.log(`Successfully edited decision with id ${decision.id}`);
+    return true;
   } catch (error) {
-    console.error(error);
+    console.error("Failed to edit decision", error);
+    throw error;
+  } finally {
+    client.release();
   }
 }

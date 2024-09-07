@@ -51,6 +51,7 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
     try {
       const newDecision = {
         id: 0,
+        //TODO: Add created_at and updated_at
         created_at: "",
         updated_at: "",
         golden_ticket: false,
