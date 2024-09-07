@@ -1,52 +1,25 @@
-import { useContext } from "react";
-import { DecisionContext } from "@/context/DecisionContext";
-
-interface NewDecision {
-  id: number;
-  golden_ticket: boolean;
-  title: string;
-  description: string;
-  measurable_Decision: string;
-  status: "Pending" | "Completed";
-  goal_met: boolean;
-  comments?: string;
-  goal_date?: string;
-  created_at: string;
-  updated_at: string;
-}
+import { sql } from "@vercel/postgres";
+import { NewDecision, Decision } from "@/types/decision";
 
 // Put on db
 export async function createDecision(
   newDecision: NewDecision
-): Promise<NewDecision> {
+): Promise<Decision> {
   try {
-    console.log(newDecision);
-    // Simulate returning the decision
-    return newDecision;
+    // Insert the new decision into the database
+    const result = await sql`
+      INSERT INTO decisions (
+        golden_ticket, title, description, measurable_goal, status, goal_met, comments, goal_date
+      ) VALUES (
+        ${newDecision.golden_ticket}, ${newDecision.title}, ${newDecision.description}, ${newDecision.measurable_goal}, ${newDecision.status}, ${newDecision.goal_met}, ${newDecision.comments}, ${newDecision.goal_date}
+      )
+      RETURNING *;
+    `;
+
+    // Return the inserted decision, mapping it to the Decision type
+    return result.rows[0] as Decision;
   } catch (error) {
-    console.error(error);
+    console.error("Failed to create decision", error);
     throw error;
   }
-}
-
-export function usePostDecision() {
-  const context = useContext(DecisionContext);
-
-  if (!context) {
-    throw new Error("usePostDecision must be used within a DecisionProvider");
-  }
-
-  // Destructuring assignment: extracts addDecision function from context
-  const { addDecision } = context;
-
-  const postDecision = async (newDecision: NewDecision) => {
-    try {
-      const decision = await createDecision(newDecision); // Call createDecision
-      addDecision(decision);
-    } catch (error) {
-      console.error("Failed to post decision", error);
-    }
-  };
-
-  return { postDecision };
 }

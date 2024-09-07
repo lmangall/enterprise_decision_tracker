@@ -1,20 +1,7 @@
 "use client";
 
 import React, { createContext, useState, ReactNode } from "react";
-
-interface Decision {
-  id: number;
-  golden_ticket: boolean;
-  title: string;
-  description: string;
-  measurable_Decision: string;
-  status: "Pending" | "Completed";
-  goal_met: boolean;
-  comments?: string;
-  goal_date?: string;
-  created_at: string;
-  updated_at: string;
-}
+import { Decision } from "../types/decision";
 
 interface DecisionContextProps {
   decisions: Decision[];
