@@ -16,6 +16,7 @@ import {
   GlobeIcon,
   LinkedInLogoIcon,
   ArchiveIcon,
+  GitHubLogoIcon,
 } from "@radix-ui/react-icons";
 
 import {
@@ -118,6 +119,7 @@ export default function Home() {
               <LinkedInLogoIcon className="h-4 w-4" />
               <ArchiveIcon className="h-4 w-4" />
               <Send className="h-4 w-4" />
+              <GitHubLogoIcon className="h-4 w-4" />
             </p>
           </div>
         </footer>
