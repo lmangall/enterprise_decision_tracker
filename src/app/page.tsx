@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import DecisionModal from "@/components/modals/DecisionModal";
 import DecisionTable from "@/components/DecisionTable";
 import { useDecisionContext } from "@/context/DecisionContext";
@@ -37,30 +36,22 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+interface FormValues {
+  userInput: string;
+}
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const { decisions, addDecision, fetchDecisions } = useDecisionContext();
+  const { decisions, addDecision } = useDecisionContext();
   const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
     null
   );
   const { toast } = useToast();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm<FormValues>();
 
   useEffect(() => {
-    const loadDecisions = async () => {
-      setLoading(true);
-      try {
-        await fetchDecisions();
-      } catch (error) {
-        console.error("Failed to fetch decisions", error);
-        showToast("Error", "Failed to fetch decisions");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadDecisions();
-  }, [fetchDecisions]);
+    setLoading(false); // LoadContext handles the fetching
+  }, []);
 
   const showToast = (title: string, message: string) => {
     const variant = title === "Error" ? "error" : "default";
@@ -71,7 +62,7 @@ export default function Home() {
     });
   };
 
-  const onSubmit = async (data: { userInput: string }) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const userInput = data.userInput;
     const {
       success,
@@ -99,8 +90,8 @@ export default function Home() {
             <div className="pb-2 flex items-center justify-between gap-4 w-full">
               <div className="flex flex-col w-full">
                 <div className="flex items-center space-x-2">
+                  <RocketIcon className="h-7 w-7" />
                   <h1 className="text-xl font-semibold">Decision Dashboard</h1>
-                  <RocketIcon className="h-6 w-6" />
                 </div>
                 <p className="text-gray-600 mb-3">
                   Track and manage your decisions
@@ -126,7 +117,7 @@ export default function Home() {
           </div>
         </main>
         <div className="flex w-full items-center space-x-2 pt-1">
-          <div className="flex items-center flex-1">
+          <div className="flex items-center flex-1 space-x-2">
             <Popover>
               <PopoverTrigger className="text-muted-foreground hover:text-foreground disabled:opacity-50 flex items-center space-x-2">
                 <CircleHelp className="h-5 w-5" />

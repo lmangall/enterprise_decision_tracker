@@ -24,8 +24,6 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   const [decisions, setDecisions] = useState<Decision[]>([]);
   const [fetched, setFetched] = useState(false); //track if decisions are already loaded
 
-  // Inside the DecisionProvider component
-
   const addDecisionFromDB = (decision: Decision) => {
     // Check for duplicates based on the id to avoid adding the same decision
     if (decisions.some((d) => d.id === decision.id)) {
