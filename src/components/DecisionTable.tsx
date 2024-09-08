@@ -78,6 +78,14 @@ export default function DecisionTable({
   };
 
   const openEditModal = (decision: Decision) => {
+    if (decision.golden_ticket == true) {
+      toast({
+        title: "This one is special",
+        description: "It looks pretty good the way it is, don't you think?",
+        variant: "error",
+      });
+      return;
+    }
     setSelectedDecision(decision);
     setIsEditModalOpen(true);
   };

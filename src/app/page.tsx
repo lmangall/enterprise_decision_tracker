@@ -97,7 +97,7 @@ export default function Home() {
                   Track and manage your decisions
                 </p>
               </div>
-              <div className="md:w-1/3 w-full">
+              <div className="md:w-1/2">
                 <DecisionModal setToast={showToast} />
               </div>
             </div>

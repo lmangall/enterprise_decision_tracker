@@ -107,6 +107,7 @@ Then I did some research on tools or best practises, as S. mentionned testing, I
 I discovered simple git hooks, and advanced E2E or unit testing with Cypress, that I setup in the repo. Very simple tests, but it was my first time with it so great opportunity to learn.
 
 Since the recruiter mentioned that it's acceptable to use ChatGPT to complete the challenge, and I like to do quality things fast, and I had more ideas that I could ever implemen in this timespan, I decided to go for it. For a few days work I am impressed in how much I learned. I used many new tools but also was able to recycle past code pieces and ideas. I am really satisfied with the code quality and with the outcome. 
+Of course it's far from being perfect, there are some minor problems, but I am happy about the code, the performance and responsiveness.
 My main deception is not having being able to have the fullstack with python middleware hosted on Vercel, but that also would have been a risk to go to far out of requirements.
 
 
