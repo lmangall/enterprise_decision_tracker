@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useForm, Controller } from "react-hook-form";
 import DecisionModal from "@/components/modals/DecisionModal";
@@ -37,12 +38,29 @@ import {
 } from "@/components/ui/popover";
 
 export default function Home() {
-  const { decisions, addDecision } = useDecisionContext();
+  const [loading, setLoading] = useState(true);
+  const { decisions, addDecision, fetchDecisions } = useDecisionContext();
   const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
     null
   );
   const { toast } = useToast();
   const { control, handleSubmit } = useForm();
+
+  useEffect(() => {
+    const loadDecisions = async () => {
+      setLoading(true);
+      try {
+        await fetchDecisions();
+      } catch (error) {
+        console.error("Failed to fetch decisions", error);
+        showToast("Error", "Failed to fetch decisions");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDecisions();
+  }, [fetchDecisions]);
 
   const showToast = (title: string, message: string) => {
     const variant = title === "Error" ? "error" : "default";
@@ -53,7 +71,7 @@ export default function Home() {
     });
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { userInput: string }) => {
     const userInput = data.userInput;
     const {
       success,
@@ -98,6 +116,7 @@ export default function Home() {
                 <DecisionTable
                   decisions={decisions}
                   onSelectDecision={(decision) => setSelectedDecision(decision)}
+                  loading={loading}
                 />
               </div>
               <div className="sticky md:w-1/3 bg-background rounded-xl border shadow w-full">

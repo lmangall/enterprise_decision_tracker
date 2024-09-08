@@ -29,15 +29,18 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
+import { DecisionTableSkeleton } from "./decision-table-skeleton";
 
 interface DecisionTableProps {
   decisions: Decision[];
   onSelectDecision: (decision: Decision) => void;
+  loading?: boolean;
 }
 
 export default function DecisionTable({
   decisions,
   onSelectDecision,
+  loading = false,
 }: DecisionTableProps) {
   const { removeDecision } = useDecisionContext();
   const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
@@ -73,6 +76,10 @@ export default function DecisionTable({
     setSelectedDecision(null);
     setIsEditModalOpen(false);
   };
+
+  if (loading) {
+    return <DecisionTableSkeleton />;
+  }
 
   return (
     <>

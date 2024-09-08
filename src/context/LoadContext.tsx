@@ -41,7 +41,7 @@ const LoadContext: React.FC = () => {
   }, [fetched, addDecisionFromDB, setFetched]);
 
   if (loading) {
-    return <div>Loading decisions...</div>;
+    return loading;
   }
 
   if (error) {
