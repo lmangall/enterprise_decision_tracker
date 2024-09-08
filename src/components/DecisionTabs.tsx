@@ -36,15 +36,15 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
           <CardContent>
             {selectedDecision ? (
               <div>
-                <p className="mt-2">
+                <div className="mt-2">
                   <span className="text-sm font-semibold leading-none">
                     Goal:
                   </span>{" "}
                   <span className="text-sm text-gray-700">
                     {selectedDecision.measurable_goal}
                   </span>
-                </p>
-                <p>
+                </div>
+                <div>
                   <span className="text-sm font-semibold leading-none">
                     Status:
                   </span>{" "}
@@ -59,18 +59,18 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
                   >
                     {selectedDecision.status}
                   </Badge>
-                </p>
-                <p>
+                </div>
+                <div>
                   <span className="text-sm font-semibold leading-none">
                     Goal Met:
                   </span>{" "}
                   <span className="text-sm text-gray-700">
                     {selectedDecision.goal_met ? "Yes" : "No"}
                   </span>
-                </p>
+                </div>
               </div>
             ) : (
-              <p></p>
+              <p>.</p>
             )}
           </CardContent>
         </Card>
