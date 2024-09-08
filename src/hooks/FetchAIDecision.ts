@@ -1,12 +1,24 @@
 export default async function FetchAIDecision(UserInput, res) {
-  const { UserDecision } = UserInput; // Adjust based on the actual structure of UserInput
+  const { UserDecision } = UserInput;
 
-  // Update the prompt to include specific details about the city and the user's name
-  const Request = `Write a decision about  ${UserInput}`;
+  const Prompt = `Generate a decision with the following fields:
+  - title: The title of the decision
+  - description: A brief description of the decision
+  - measurable_goal: A goal that can be measured
+  - goal_date: The date by which the goal should be met (in ISO format)
 
-  console.log("Prompt sent to OpenAI:", Request);
+  Respect this format:
+  {
+    "title": "string",
+    "description": "string",
+    "measurable_goal": "string",
+    "goal_date": "string (ISO format) | null"
+  }
 
-  const messages = [{ role: "user", content: Request }];
+  Please provide a JSON response following this structure.`;
+  console.log("Prompt sent to OpenAI:", Prompt);
+
+  const messages = [{ role: "user", content: Prompt }];
 
   try {
     // Call OpenAI API with the prepared message
