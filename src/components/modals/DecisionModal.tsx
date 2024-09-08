@@ -54,6 +54,7 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
 
   const targetDate = watch("targetDate");
 
+  //TODO: import type from type.ts
   const onSubmit = async (data: FormData) => {
     try {
       const newDecision = {

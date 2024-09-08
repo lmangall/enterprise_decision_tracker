@@ -1,4 +1,6 @@
-### Form Validation Rules
+### Form Validation Rules 
+
+Within `DecisionModal.tsx` also `validation.ts` for duplicates
 
 1. **Title**: Required field. The form will show an error message ("Title is required") if this field is empty. The title must also be at least 5 characters long.before adding to the context validation.ts will be called to check if a Decision with an identic field exist
 
