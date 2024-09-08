@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useForm, Controller } from "react-hook-form";
 import DecisionModal from "@/components/modals/DecisionModal";
 import DecisionTable from "@/components/DecisionTable";
 import { useDecisionContext } from "@/context/DecisionContext";
@@ -8,6 +9,7 @@ import LoadContext from "@/context/LoadContext";
 import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
+import FetchAIDecision from "@/hooks/FetchAIDecision";
 import { Input } from "@/components/ui/input";
 import { CircleHelp, Send } from "lucide-react";
 import {
@@ -31,6 +33,11 @@ export default function Home() {
     null
   );
   const { toast } = useToast();
+
+  const { control, handleSubmit } = useForm();
+  const onSubmit = (data: any) => {
+    FetchAIDecision(data.userInput);
+  };
 
   const showToast = (title: string, message: string) => {
     const variant = title === "Error" ? "error" : "default";
@@ -98,12 +105,23 @@ export default function Home() {
               <p className="font-medium">Try it for yourself!</p>
             </PopoverContent>
           </Popover>
-          <Input type="email" placeholder="Plain text decision creation" />
-          <Button type="submit">Add</Button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="userInput"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  placeholder="Plain text decision creation"
+                  {...field}
+                />
+              )}
+            />
+            <Button type="submit">Add</Button>
+          </form>
         </div>
         <footer className="w-full mt-10 py-4 px-4">
           <div className="flex flex-col items-center justify-center space-y-2 text-grey-600">
-            {/* Icons Section */}
             <p>
               <a
                 href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
@@ -124,7 +142,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-      {/* Footer Section */}
     </div>
   );
 }
