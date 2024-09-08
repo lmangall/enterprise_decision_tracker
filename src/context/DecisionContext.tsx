@@ -41,9 +41,8 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   const addDecision = (decision: Decision) => {
     // Check for duplicates first
     if (isDuplicateDecision(decision, decisions)) {
-      // Handle error case: show a message or notify the user
-      console.error("A decision with similar details already exists.");
-      return; // Do not update the state
+      // Throw an error instead of just logging it
+      throw new Error("A decision with similar details already exists.");
     }
 
     // Proceed to add the decision

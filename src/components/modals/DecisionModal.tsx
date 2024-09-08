@@ -36,7 +36,13 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { addDecision } = useDecisionContext();
-  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       title: "",
       description: "",
@@ -105,13 +111,29 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
               <Controller
                 name="title"
                 control={control}
-                rules={{ required: "Title is required" }}
+                rules={{
+                  required: "Title is required",
+                  minLength: {
+                    value: 4,
+                    message: "Title must be at least 5 characters long",
+                  },
+                }}
                 render={({ field }) => (
-                  <Input
-                    id="title"
-                    placeholder="Title of the decision"
-                    {...field}
-                  />
+                  <div>
+                    <Input
+                      id="title"
+                      placeholder="Title of the decision"
+                      {...field}
+                      className={`border ${
+                        errors.title ? "border-red-500" : "border-gray-300"
+                      }`}
+                    />
+                    {errors.title && (
+                      <p className="text-red-500 text-sm">
+                        {errors.title.message}
+                      </p>
+                    )}
+                  </div>
                 )}
               />
             </div>
@@ -134,13 +156,32 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
               <Controller
                 name="measurableGoal"
                 control={control}
-                rules={{ required: "Measurable goal is required" }}
+                rules={{
+                  required: "Measurable goal is required",
+                  minLength: {
+                    value: 10,
+                    message:
+                      "Measurable goal must be at least 10 characters long",
+                  },
+                }}
                 render={({ field }) => (
-                  <Input
-                    id="measurableGoal"
-                    placeholder="A single, clear, and quantifiable goal"
-                    {...field}
-                  />
+                  <div>
+                    <Input
+                      id="measurableGoal"
+                      placeholder="A single, clear, and quantifiable goal"
+                      {...field}
+                      className={`border ${
+                        errors.measurableGoal
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                    />
+                    {errors.measurableGoal && (
+                      <p className="text-red-500 text-sm">
+                        {errors.measurableGoal.message}
+                      </p>
+                    )}
+                  </div>
                 )}
               />
             </div>
