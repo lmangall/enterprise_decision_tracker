@@ -1,5 +1,7 @@
 "use server";
 
+import { Decision } from "@/types/decision";
+
 export async function fetchAIDecision(userInput: string) {
   const prompt = `Transform my user input into a json formatted goal:
   - title: The title of the decision
@@ -46,8 +48,11 @@ export async function fetchAIDecision(userInput: string) {
     console.log("choice0:", content);
 
     if (data.choices && data.choices.length > 0) {
-      const decision = JSON.parse(data.choices[0].message.content);
-      console.log("-Parsed Decision:", decision);
+      const parsedDecision = JSON.parse(content);
+      console.log("-Parsed Decision:", parsedDecision);
+
+      // Map to NewDecision
+      const decision = mapToNewDecision(parsedDecision);
       return { success: true, data: decision };
     } else {
       throw new Error("No decision found from OpenAI");
@@ -58,4 +63,23 @@ export async function fetchAIDecision(userInput: string) {
     console.error("Error:", errorMessage);
     return { success: false, error: errorMessage };
   }
+}
+
+function mapToNewDecision(parsedData: any): Decision {
+  return {
+    id: 0, //TODO: verify that both in the context and db this is changed
+    created_at: "",
+    updated_at: "",
+    golden_ticket: false, // Default or derived from parsedData
+    title: parsedData.title || "Untitled",
+    description: parsedData.description || "No description provided",
+    measurable_goal:
+      parsedData.measurable_goal || "No measurable goal provided",
+    status: "pending", // Default or inferred from parsedData
+    goal_met: false, // Default or derived from parsedData
+    comments: "", // Default or derived from parsedData
+    goal_date: parsedData.goal_date
+      ? new Date(parsedData.goal_date).toISOString()
+      : null,
+  };
 }

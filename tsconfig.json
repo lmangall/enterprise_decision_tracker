@@ -44,7 +44,7 @@
     "cypress/**/*.ts",
     "src/components/.EditDecision.ts",
     "src/components/.DeleteDecision.ts"
-  ],
+, "src/components/.AddDecisionHandler"  ],
   "exclude": [
     "node_modules"
   ]

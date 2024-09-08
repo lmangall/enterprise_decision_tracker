@@ -1,0 +1,54 @@
+import { createDecision } from "@/hooks/PostDecision";
+import { useDecisionContext } from "@/context/DecisionContext";
+import { NewDecision, XDecision } from "@/types/decision"; // Adjust the import based on your file structure
+
+type AddDecisionHandlerProps = {
+  data: NewDecision;
+  setToast: (title: string, message: string) => void;
+  onSuccess: () => void;
+  onError: () => void;
+};
+
+export default async function AddDecisionHandler({
+  data,
+  setToast,
+  onSuccess,
+  onError,
+}: AddDecisionHandlerProps) {
+  const { addDecision } = useDecisionContext();
+
+  try {
+    // Convert `data` to match the `XDecision` type
+    const newDecision: XDecision = {
+      id: 0, // Default value
+      created_at: "", // Default value
+      updated_at: "", // Default value
+      golden_ticket: false,
+      title: data.title,
+      description: data.description,
+      measurable_goal: data.measurable_goal,
+      status: data.status,
+      goal_met: data.goal_met ?? false,
+      comments: data.comments,
+      goal_date: data.goal_date
+        ? typeof data.goal_date === "string"
+          ? data.goal_date
+          : data.goal_date.toISOString()
+        : undefined,
+    };
+
+    await addDecision(newDecision);
+    await createDecision(newDecision);
+
+    onSuccess();
+    setToast("Success", "Decision created successfully!");
+  } catch (error) {
+    console.error("Failed to create decision", error);
+    if (error instanceof Error) {
+      setToast("Error", error.message);
+    } else {
+      setToast("Error", "An unknown error occurred");
+    }
+    onError();
+  }
+}
