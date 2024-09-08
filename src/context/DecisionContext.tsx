@@ -24,27 +24,27 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
   const [fetched, setFetched] = useState(false); //track if decisions are already loaded
 
   const addDecision = (decision: Decision) => {
-    return new Promise<void>((resolve, reject) => {
-      setDecisions((prevDecisions) => {
-        // Use validation function to check for duplicates
-        if (isDuplicateDecision(decision, prevDecisions)) {
-          reject(new Error("A decision with similar details already exists."));
-          return prevDecisions; // return the previous state without adding the new decision
-        }
+    // Check for duplicates first
+    if (isDuplicateDecision(decision, decisions)) {
+      // Handle error case: show a message or notify the user
+      console.error("A decision with similar details already exists.");
+      return; // Do not update the state
+    }
 
-        // Assign a unique id to the decision: +1 to the last id
-        const lastId =
-          prevDecisions.length > 0
-            ? Math.max(...prevDecisions.map((d) => d.id))
-            : 0;
-        const newDecision = { ...decision, id: lastId + 1 };
+    // Proceed to add the decision
+    setDecisions((prevDecisions) => {
+      const lastId =
+        prevDecisions.length > 0
+          ? Math.max(...prevDecisions.map((d) => d.id))
+          : 0;
+      const newDecision = { ...decision, id: lastId + 1 };
 
-        const updatedDecisions = [...prevDecisions, newDecision];
-        console.log("Added decision:", newDecision);
-        console.log("Current context decisions:", updatedDecisions);
-        resolve();
-        return updatedDecisions;
-      });
+      console.log("Added decision:", newDecision);
+      console.log("Current context decisions:", [
+        ...prevDecisions,
+        newDecision,
+      ]);
+      return [...prevDecisions, newDecision];
     });
   };
 

@@ -3,7 +3,7 @@ import { deleteDecision } from "@/hooks/DeleteDecision";
 import { toast } from "@/hooks/use-toast";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
-import { EditDecision } from "@/components/modals/EditDecision";
+import { EditDecisionModal } from "@/components/modals/EditDecisionModal";
 import { format } from "date-fns";
 import {
   Table,
@@ -151,7 +151,10 @@ export default function DecisionTable({ decisions }: DecisionTableProps) {
       </Table>
 
       {isEditModalOpen && selectedDecision && (
-        <EditDecision decision={selectedDecision} onClose={closeEditModal} />
+        <EditDecisionModal
+          decision={selectedDecision}
+          onClose={closeEditModal}
+        />
       )}
     </>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
-import { editDecision } from "@/hooks/EditDecision";
+import { editDecisionDB } from "@/hooks/EditDecisionDB";
 import { toast } from "@/hooks/use-toast";
 import { isDuplicateDecision } from "@/components/utils/validation";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,15 @@ import {
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 
-type EditDecisionProps = {
+type EditDecisionModalProps = {
   decision: Decision;
   onClose: () => void;
 };
 
-export function EditDecision({ decision, onClose }: EditDecisionProps) {
+export function EditDecisionModal({
+  decision,
+  onClose,
+}: EditDecisionModalProps) {
   const { decisions, updateDecision } = useDecisionContext();
   const { control, handleSubmit, setValue, watch } = useForm<Decision>({
     defaultValues: {
@@ -41,8 +44,8 @@ export function EditDecision({ decision, onClose }: EditDecisionProps) {
       if (isDuplicateDecision(updatedDecision, decisions)) {
         throw new Error("A decision with similar details already exists.");
       }
-
-      await editDecision(updatedDecision);
+      console.log("before calling editDecisionDB");
+      await editDecisionDB(updatedDecision);
       updateDecision(updatedDecision);
       onClose(); // close the modal
 
