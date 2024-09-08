@@ -5,7 +5,8 @@ import { Decision } from "@/types/decision";
 
 // Component that loads decisions into the context when the app starts, only if not already loaded
 const LoadContext: React.FC = () => {
-  const { decisions, addDecision, fetched, setFetched } = useDecisionContext();
+  const { decisions, addDecisionFromDB, fetched, setFetched } =
+    useDecisionContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isMounted = useRef(false); // to track component mounting
@@ -20,7 +21,8 @@ const LoadContext: React.FC = () => {
     const fetchDecisions = async () => {
       try {
         const fetchedDecisions: Decision[] = await retrieveDecisions();
-        fetchedDecisions.forEach((decision) => addDecision(decision));
+        fetchedDecisions.forEach((decision) => addDecisionFromDB(decision));
+        console.log("Decisions loaded:", fetchedDecisions);
         setFetched(true); // Mark as fetched after successful loading
         setLoading(false);
       } catch (err) {
@@ -36,7 +38,7 @@ const LoadContext: React.FC = () => {
       setLoading(false); // Set loading to false if decisions are in context
     }
     isMounted.current = true;
-  }, [fetched, addDecision, setFetched]);
+  }, [fetched, addDecisionFromDB, setFetched]);
 
   if (loading) {
     return <div>Loading decisions...</div>;
