@@ -47,7 +47,10 @@ export async function fetchAIDecision(userInput: string) {
       throw new Error("No decision found from OpenAI");
     }
   } catch (error) {
-    console.error("Error:", error);
-    return { success: false, error: error.message };
+    // Type assertion to handle the 'unknown' type error
+    const errorMessage =
+      (error as Error).message || "An unknown error occurred";
+    console.error("Error:", errorMessage);
+    return { success: false, error: errorMessage };
   }
 }
