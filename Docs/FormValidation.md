@@ -10,8 +10,11 @@ Within `DecisionModal.tsx` also `validation.ts` for duplicates
 
 4. **Target Date**: No specific validation rules are applied, but it's displayed as a read-only field once a date is selected. It's an difficult field to manage due to the type (text, iso...) and differences between db and React.
 
-5. **Status**: Required field. The form will show an error message ("Status is required") if this field is not selected. TODO: get rid of the error message: anyway the user has "pending" by default... (sorry, short on time)
+5. **Status**: Required field. The form will show an error message ("Status is required") if this field is not selected. TODO: get rid of the error message: anyway the user has "pending" by default... (sorry, short on time). When the status is set to "completed" the user is invited (toast) to add a comment
 
+6. **Comment**:  The comments filled is only shown when the status is set to "completed".
+
+7. **Goal met**:  Disable the Goal Met Switch: The switch to toggle goal_met is visible only whenthe status is set to "completed." toggling it is optional.
 
 
 ### Explanation of React Hook

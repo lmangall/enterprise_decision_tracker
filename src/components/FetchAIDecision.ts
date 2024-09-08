@@ -34,7 +34,7 @@ function mapToDecision(parsedData: any): Decision {
 export async function fetchAndCreateDecision(userInput: string) {
   const prompt = `Transform my user input into a JSON formatted goal:
   - title: The title of the decision
-  - description: A brief description of the decision
+  - description: A description of the decision [around 40 words]
   - measurable_goal: A goal that can be measured
   - goal_date: The date by which the goal should be met (in ISO format)
 

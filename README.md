@@ -29,19 +29,18 @@ https://enterprise-decision-tracker.vercel.app/
 
 ## UX/UI
 <details>
-<summary>-`shadcn` "library" (it relies on Radix and Tailwind)
+<summary>Shadcn "library"
 </summary>
 
 It's not per-se a library overloading the `node_modules` folder. Instead of installing a package, we use an `npx` command that will copy/paste the code, or copy paste manually of course.
 It's built on top of Radix and Tailwind, so solid fundations.
 The idea behind this is to give you ownership and control over the code, allowing you to decide how the components are built and styled, and full freedom to modify it.
 So yeah, it's the trendy library at the moment, but this was my first experience and I'm blown away with how fast you get to the result you want.
+It relies on Radix and Tailwind
 
 </details>
 
 - aceternity
-
-### :
 
 
 ### Testing and code quality:
@@ -52,12 +51,11 @@ So yeah, it's the trendy library at the moment, but this was my first experience
 
 ### Functionality:
 
-- Required functionalities + small details (Goal dates, pending status...
-- Clear and dark mode (mentioned by Sim)
+- Required functionalities + small details (Goal dates, pending status...)
+- Proper (I think) form validation (more under Docs/FormsValidation.md)
 - OpenAI - per-task advice
 - OpenAI - Plain text task generation (the prompt is passed to openAI, mapped to Decision type, then added like a "normal" task)
 
-- Show raw data (S. mention it is something to be implemented for A. I find it cool to see a raw json behind a pretty ui)
 
 
 ### Implementation:
@@ -65,6 +63,8 @@ So yeah, it's the trendy library at the moment, but this was my first experience
 
 ## Extras and Improvements left to do:
 
+- Show raw data (S. mention it is something to be implemented for A. I find it cool to see a raw json behind a pretty ui)
+- Clear and dark mode (mentioned by Sim)
 - Redux
 - more DRY (FetchAIDecision and DecisionModal have similar mechanisms to add to context and db)
 - having a rating value for _important_ and _urgent_ would allow to have an Eisenhower matrix to prioritize and have a graphic, would be super cool and useful
@@ -92,10 +92,11 @@ I know this one is a classic. I experienced it with the toast. Furthermore I was
 
 
 # Run locally:
+- setup the env
 - npm install
 - install vercel
 - vercel dev (with npm run dev the db queries might fail)
-- setup the env
+- npm cypress open or npm cypress run
 
 
 ### My Approach to this project:

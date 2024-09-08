@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
@@ -33,7 +33,13 @@ export function EditDecisionModal({
   onClose,
 }: EditDecisionModalProps) {
   const { decisions, updateDecision } = useDecisionContext();
-  const { control, handleSubmit, setValue, watch } = useForm<Decision>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<Decision>({
     defaultValues: {
       ...decision,
       goal_date: decision.goal_date ? new Date(decision.goal_date) : null,
@@ -41,13 +47,13 @@ export function EditDecisionModal({
   });
 
   const goalDate = watch("goal_date");
+  const status = watch("status");
 
   const handleEdit = async (updatedDecision: Decision) => {
     try {
       if (isDuplicateDecision(updatedDecision, decisions)) {
         throw new Error("A decision with similar details already exists.");
       }
-      // console.log("before calling editDecisionDB");
       await editDecisionDB(updatedDecision);
       updateDecision(updatedDecision);
       onClose(); // close the modal
@@ -66,6 +72,16 @@ export function EditDecisionModal({
       });
     }
   };
+
+  // watch status and show a prompt if status changes to 'completed'
+  useEffect(() => {
+    if (status === "completed") {
+      toast({
+        title: "Optional Actions",
+        description: "You can add a comment or mark the goal as met.",
+      });
+    }
+  }, [status]);
 
   return (
     <Modal onClose={onClose}>
@@ -93,6 +109,9 @@ export function EditDecisionModal({
               />
             )}
           />
+          {errors.title && (
+            <p className="text-red-500">{errors.title.message}</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="description">Description</Label>
@@ -122,6 +141,9 @@ export function EditDecisionModal({
               />
             )}
           />
+          {errors.measurable_goal && (
+            <p className="text-red-500">{errors.measurable_goal.message}</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="goal_date">Goal Date</Label>
@@ -142,7 +164,6 @@ export function EditDecisionModal({
               <CalendarIcon className="h-4 w-4" />
             </Button>
           </div>
-          {/* Calendar component */}
         </div>
         <div className="space-y-2">
           <Label htmlFor="status">Status</Label>
@@ -163,7 +184,12 @@ export function EditDecisionModal({
               </Select>
             )}
           />
+          {errors.status && (
+            <p className="text-red-500">{errors.status.message}</p>
+          )}
         </div>
+
+        {/* Toggle goal_met only when status is 'completed' */}
         <div className="flex items-center space-x-2">
           <Controller
             name="goal_met"
@@ -173,25 +199,31 @@ export function EditDecisionModal({
                 id="goal_met"
                 checked={field.value}
                 onCheckedChange={field.onChange}
+                disabled={status !== "completed"}
               />
             )}
           />
           <Label htmlFor="goal_met">Goal Met</Label>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="comments">Comments</Label>
-          <Controller
-            name="comments"
-            control={control}
-            render={({ field }) => (
-              <Textarea
-                id="comments"
-                placeholder="Additional comments"
-                {...field}
-              />
-            )}
-          />
-        </div>
+
+        {/* conditionally render comments field if status is 'completed'*/}
+        {status === "completed" && (
+          <div className="space-y-2">
+            <Label htmlFor="comments">Comments (Optional)</Label>
+            <Controller
+              name="comments"
+              control={control}
+              render={({ field }) => (
+                <Textarea
+                  id="comments"
+                  placeholder="Add any comments if you want"
+                  {...field}
+                />
+              )}
+            />
+          </div>
+        )}
+
         <Button type="submit" className="w-full">
           Update Decision
         </Button>
