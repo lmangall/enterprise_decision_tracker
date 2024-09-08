@@ -1,34 +1,50 @@
+# TO DO
+- unit testing with cypress + write docs
+- toogle for clear/dark mode
+- center the goal_met icon
+- raw data view
+- improve tabs ui
+- ai help for tab
+- aceternity animation (hero border gradient, moving borders, aurora background, )
+- goldenticket security
+- improve form validation + write docs
+
 ## Architecture
 
 ### Stack:
+- Next.js (transitionned from js to ts)
+- Deployed on Vercel
+- postgres db from Vercel
 
-- Use a Database
-- Deploy on Vercel
-- use git hooks to have pre-commit tests
-- Implement automated CI/CD tests with GitHub Actions (yml)
 
 ## UX/UI
+- `shadcn` "library" (it relies on Radix and Tailwind)
+- aceternity
 
-### Stack:
+### :
 
-- Use Tailwind CSS for styling
-- Use `shadcn` eventually `aceternity`
+
+### Testing and code quality:
+- conventional commits
+- git hooks to have pre-commit tests
+- Cypress for unit testing
+- Automated CI/CD with GitHub Actions
 
 ### Functionality:
 
 - Clear and dark mode (mentioned by Sim)
-- Provide an option to "show raw data" (mentioned by Sim)
+- Show raw data (Sim mention it is something to be implemented for A. I find it cool to see a raw json behind a pretty ui)
+- OpenAI - advice for each task
+- OpenAI - format plain text tasks into task objects (eventually, also be used for deletion or other )
+
 
 ### Implementation:
-
-- Consider using a .ts template for decision formatting
-- Use the React Context API in parallel with API calls for state management
+- React Context API in parallel with API calls for state management
 
 ## Extras and Improvements:
 
 - Redux
-- OpenAI - advice for each task
-- OpenAI - format plain text tasks into task objects (eventually, also be used for deletion or other )
+- more DRY (FetchAIDecision and DecisionModal have similar mechanisms to add to context and db)
 
 ## Freedom in interpreting the subject:
 
