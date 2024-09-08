@@ -48,7 +48,7 @@ export default function DecisionTable({
   const handleDelete = async (decision: Decision) => {
     try {
       await deleteDecision(decision.id);
-      removeDecision(decision.id); // remove decision from the context
+      removeDecision(decision.id);
       toast({
         title: "Success",
         description: "Decision deleted successfully",

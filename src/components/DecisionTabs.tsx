@@ -28,7 +28,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
               {selectedDecision ? selectedDecision.title : "Decision Details"}
             </CardTitle>
             <CardDescription className="text-sm text-gray-700 mb-5">
-              {null
+              {selectedDecision
                 ? selectedDecision.description
                 : "Select a decision from the table to view details"}
             </CardDescription>
@@ -36,11 +36,6 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
           <CardContent>
             {selectedDecision ? (
               <div>
-                {/* <p className="text-sm text-gray-700 mb-5">
-                  {selectedDecision.description
-                    ? null
-                    : "Select a decision from the table to view details"}
-                </p> */}
                 <p className="mt-2">
                   <span className="text-sm font-semibold leading-none">
                     Goal:
@@ -75,7 +70,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
                 </p>
               </div>
             ) : (
-              <p></p>
+              <p>Select a decision to view details</p>
             )}
           </CardContent>
         </Card>
