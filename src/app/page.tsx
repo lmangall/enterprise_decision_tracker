@@ -9,7 +9,14 @@ import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
 import { Input } from "@/components/ui/input";
-import { CircleHelp } from "lucide-react";
+import { CircleHelp, Globe } from "lucide-react";
+import {
+  RocketIcon,
+  CrumpledPaperIcon,
+  GlobeIcon,
+  LinkedInLogoIcon,
+} from "@radix-ui/react-icons";
+
 import {
   Popover,
   PopoverContent,
@@ -38,11 +45,13 @@ export default function Home() {
       <div className="flex flex-col sm:gap-4">
         <main className="grid flex-1">
           <div className="max-w-[59rem] gap-4">
-            <div className="bg-grey-100 pb-2 flex items-center justify-between gap-4">
+            <div className="pb-2 flex items-center justify-between gap-4">
               <div className="flex flex-col">
-                <h1 className="bg-slate-100	text-xl font-semibold">
-                  Decision Dashboard
-                </h1>
+                {/* Flex container for h1 and RocketIcon */}
+                <div className="flex items-center space-x-2">
+                  <h1 className="text-xl font-semibold">Decision Dashboard</h1>
+                  <RocketIcon className="h-6 w-6" />
+                </div>
                 <p className="text-gray-600 mb-3">
                   Track and manage your decisions
                 </p>
@@ -68,7 +77,7 @@ export default function Home() {
             </div>
           </div>
         </main>
-        <div className="flex w-full items-center space-x-2">
+        <div className="flex w-full items-center space-x-2 pt-1">
           <Popover>
             <PopoverTrigger className="hidden text-muted-foreground hover:text-foreground disabled:opacity-50 sm:flex">
               <CircleHelp className="h-5 w-5" />
@@ -90,6 +99,27 @@ export default function Home() {
           <Input type="email" placeholder="Plain text decision creation" />
           <Button type="submit">Add</Button>
         </div>
+      </div>
+      {/* Footer Section */}
+      <div className="flex flex-col items-center justify-center min-h-screen sm:gap-4">
+        <footer className="w-full mt-8 py-4 flex items-center justify-between px-4">
+          {/* Icons Section */}
+          <div className="flex space-x-4">
+            <CrumpledPaperIcon className="h-4 w-4" />
+            <GlobeIcon className="h-4 w-4" />
+            <RocketIcon className="h-4 w-4" />
+          </div>
+
+          {/* Contact Section */}
+          <div className="flex items-center space-x-4">
+            <Button as="a" href="mailto:contact@example.com">
+              contact@example.com
+            </Button>
+            <Button as="a" href="https://linkedin.com" target="_blank">
+              <LinkedInLogoIcon className="h-6 w-6" />
+            </Button>
+          </div>
+        </footer>
       </div>
     </div>
   );
