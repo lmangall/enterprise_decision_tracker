@@ -8,6 +8,19 @@
 - aceternity animation (hero border gradient, moving borders, aurora background, )
 - goldenticket security
 - improve form validation + write docs
+- rickroll
+- confirm before deletion
+
+- table ui:
+smaller goal date
+burger more on the right 
+status smaller
+categories bigger
+
+
+Deployed demo:
+https://enterprise-decision-tracker.vercel.app/
+
 
 ## Architecture
 
@@ -54,3 +67,18 @@
 When I implemented the EditDecisionModal, the modal stayed "under" the DecisionTabs, I tried changing the z-indexing of different components but didn't get to make it work.
 The approach to solve the problem involved using a portal to render the modal outside of the normal DOM hierarchy. It's probably not the way it should be, but for a projects that spans in less than a week which I am quite proud of I prefer using a trick than stay stuck in endless z-indexing.
 For the sake of consistency I modified the other modal I used to also rely on Modal.tsx that is used to render a direct child of the `<body>`element
+
+### validation:
+classic type validation is handled through react-hook-forms, then
+add: check first in context for a duplicate, if there are no duplicate add to context and db (id is highest + 1). This order is important to minimize unnecessary calls to backend
+edit: In this case, naturally there can be a "duplicate" when we compare new form/existing form, as long as the id is the same its fine (otherwise the user is creating a second but identic one)
+delete: delete in both db and context
+
+### passing a prop to a childre
+I know it's a classic
+
+# Run locally:
+- npm install
+- install vercel
+- vercel dev (with npm run dev the db queries might fail)
+- setup the env
