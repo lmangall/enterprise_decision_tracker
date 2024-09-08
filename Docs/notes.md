@@ -16,14 +16,6 @@ The handleSubmit property is a function that handles form submission. It takes a
 
 
 
-
-
-
-while slightly overengineered, having a python backend between the KV DB and the frontend allows for more modularity and the possibility for advanced computation. I decided to explore this setup as it's a good starting point for future projects
-Furthermore, SQL db from Vercel work only with the next sdk, which would also mean get rid of the Python middleware
-
-Check the video about "12 errors junior react dev make"
-
 milestones:
 
 setup and test architecture
@@ -31,39 +23,13 @@ the combination of next and python took a while to setup (I wanted to do from sc
 
 - code basic ui
 
-it's not per-se a library overloading the node moudules folder
-instead of installing a package we use a npx command that will copy/paste
-Built on top of radix and tailwind
 
-I mean you do not install it as a dependency. It is not available or distributed via npm.
-
-The idea behind this is to give you ownership and control over the code, allowing you to decide how the components are built and styled.
-
-Wether to use react-hook-form or not ?
-https://ui.shadcn.com/docs/components/form
-
-approach to this project:
-first step was doing research on tools or best practises to use
-
-Figma for Shadcn
-https://www.figma.com/community/file/1203061493325953101/shadcn-ui-design-system
-
-Local testing:
-Client
-npm run dev
+__________
 
 Server:
 python3 -m venv venv
 source venv/bin/activate
 python3 -m uvicorn api.index:app
-
-improvements:
-instead of pending or completed, there could be a backlog status
-
-not only sdk: Learn how to access and use your KV database with the Vercel KV Rest API.
-
-first idea was to have front back and db in vercel:
-this proves impossible: front and back is possible, but vercel postgres use a next.js sdk to connect to db, so the backend is useless (in terms of being a midleware for front and back)
 
 _________________________________________________________
 

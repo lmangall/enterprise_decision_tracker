@@ -17,6 +17,8 @@ Deployed demo:
 https://enterprise-decision-tracker.vercel.app/
 
 
+## Intro
+
 ## Architecture
 
 ### Stack:
@@ -26,7 +28,20 @@ https://enterprise-decision-tracker.vercel.app/
 
 
 ## UX/UI
-- `shadcn` "library" (it relies on Radix and Tailwind)
+<details>
+<summary>-`shadcn` "library" (it relies on Radix and Tailwind)
+</summary>
+
+It's not per-se a library overloading the `node_modules` folder. Instead of installing a package, we use an `npx` command that will copy/paste the code.
+
+Built on top of Radix and Tailwind.
+
+I mean you do not install it as a dependency. It is not available or distributed via npm.
+
+The idea behind this is to give you ownership and control over the code, allowing you to decide how the components are built and styled.
+
+</details>
+
 - aceternity
 
 ### :
@@ -40,16 +55,18 @@ https://enterprise-decision-tracker.vercel.app/
 
 ### Functionality:
 
+- Required functionalities + small details (Goal dates, pending status...
 - Clear and dark mode (mentioned by Sim)
-- Show raw data (Sim mention it is something to be implemented for A. I find it cool to see a raw json behind a pretty ui)
-- OpenAI - advice for each task
-- OpenAI - format plain text tasks into task objects (eventually, also be used for deletion or other )
+- OpenAI - per-task advice
+- OpenAI - Plain text task generation (the prompt is passed to openAI, mapped to Decision type, then added like a "normal" task)
+
+- Show raw data (S. mention it is something to be implemented for A. I find it cool to see a raw json behind a pretty ui)
 
 
 ### Implementation:
-- React Context API in parallel with API calls for state management
+- React Context API in parallel with DB query
 
-## Extras and Improvements:
+## Extras and Improvements left to do:
 
 - Redux
 - more DRY (FetchAIDecision and DecisionModal have similar mechanisms to add to context and db)
@@ -82,3 +99,13 @@ I know this one is a classic. I experienced it with the toast. Furthermore I was
 - install vercel
 - vercel dev (with npm run dev the db queries might fail)
 - setup the env
+
+
+### My Approach to this project:
+First I spent one day overengineering and researching:
+Building a react front-end without any back, seems like a pretty face without any soul or heart, so I wanted _at least_ a database, ideally way more.
+First idea was to have front, back, and db in vercel. I wanted to try the new feature of vercel that makes it possible to run python. It seemd like a great reusable setup, all in one vercel project.
+Unfortunally his proved impossible: front (next) and back (Python) is possible, but vercel postgres use a next.js sdk to connect to db, so the backend is useless (in terms of being a midleware for front and back). For it to makes sense the project would have to rely on an external DB. End of the overengineering phase (but I keep my next.js+Python setup for a future project (it wasn't easy to set up)). I settled on Vercel+Postgress, Postgress being new to me, this is a great opportunity.
+Then I did some research on tools or best practises, as S. mentionned testing, I did some CI/CD with https://github.com/dantol29/webserver/ (where we had a great team work) but it wasn't much.
+I discovered simple git hooks, and advanced E2E or unit testing with Cypress, that I setup in the repo. Very simple tests, but it was my first time with it so great opportunity to learn
+
