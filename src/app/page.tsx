@@ -23,7 +23,6 @@ export default function Home() {
   );
   const { toast } = useToast();
 
-  // Define showToast to handle both title and message
   const showToast = (title: string, message: string) => {
     const variant = title === "Error" ? "error" : "default";
 
@@ -39,25 +38,22 @@ export default function Home() {
       <div className="flex flex-col sm:gap-4">
         <main className="grid flex-1">
           <div className="max-w-[59rem] gap-4">
-            <div className="flex items-center justify-between gap-4">
-              <h1 className="text-xl font-semibold">Decision Dashboard</h1>
-              <div className="flex md:w-1/3">
+            <div className="bg-grey-100 pb-2 flex items-center justify-between gap-4">
+              <div className="flex flex-col">
+                <h1 className="bg-slate-100	text-xl font-semibold">
+                  Decision Dashboard
+                </h1>
+                <p className="text-gray-600 mb-3">
+                  Track and manage your decisions
+                </p>
+              </div>
+              <div className="md:w-1/3">
+                {/* Apply w-full inside DecisionModal */}
                 <DecisionModal
                   setToast={(title, message) => showToast(title, message)}
                 />
-                <Button
-                  onClick={() => {
-                    console.log("Button clicked");
-                    showToast("Button Clicked", "The button has been clicked");
-                  }}
-                >
-                  Button
-                </Button>
               </div>
             </div>
-            <p className="text-gray-600 mb-6">
-              Track and manage your decisions
-            </p>
             <div className="sticky flex flex-col md:flex-row gap-4">
               <div className="sticky md:w-2/3 border rounded-xl border shadow">
                 <LoadContext />

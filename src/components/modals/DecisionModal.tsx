@@ -80,7 +80,11 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
 
   return (
     <div>
-      <Button variant="outline" onClick={() => setIsFormVisible(true)}>
+      <Button
+        variant="outline"
+        className="w-full"
+        onClick={() => setIsFormVisible(true)}
+      >
         New Decision
       </Button>
 
