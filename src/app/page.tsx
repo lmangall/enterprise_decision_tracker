@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
 import { Input } from "@/components/ui/input";
-import { CircleHelp, Globe } from "lucide-react";
+import { CircleHelp, Send } from "lucide-react";
 import {
   RocketIcon,
   CrumpledPaperIcon,
@@ -43,11 +43,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen sm:gap-4">
-      <div className="flex flex-col sm:gap-4">
-        <main className="grid flex-1">
-          <div className="max-w-[59rem] gap-4">
-            <div className="pb-2 flex items-center justify-between gap-4">
-              <div className="flex flex-col">
+      <div className="flex flex-col sm:gap-4 w-full max-w-[59rem]">
+        <main className="grid flex-1 w-full">
+          <div className="w-full gap-4">
+            <div className="pb-2 flex items-center justify-between gap-4 w-full">
+              <div className="flex flex-col w-full">
                 {/* Flex container for h1 and RocketIcon */}
                 <div className="flex items-center space-x-2">
                   <h1 className="text-xl font-semibold">Decision Dashboard</h1>
@@ -57,22 +57,22 @@ export default function Home() {
                   Track and manage your decisions
                 </p>
               </div>
-              <div className="md:w-1/3">
+              <div className="md:w-1/3 w-full">
                 {/* Apply w-full inside DecisionModal */}
                 <DecisionModal
                   setToast={(title, message) => showToast(title, message)}
                 />
               </div>
             </div>
-            <div className="sticky flex flex-col md:flex-row gap-4">
-              <div className="sticky md:w-2/3 border rounded-xl border shadow">
+            <div className="sticky flex flex-col md:flex-row gap-4 w-full">
+              <div className="sticky md:w-2/3 border rounded-xl border shadow w-full">
                 <LoadContext />
                 <DecisionTable
                   decisions={decisions}
                   onSelectDecision={(decision) => setSelectedDecision(decision)}
                 />
               </div>
-              <div className="sticky md:w-1/3 bg-background rounded-xl border shadow">
+              <div className="sticky md:w-1/3 bg-background rounded-xl border shadow w-full">
                 <DecisionTabs selectedDecision={selectedDecision} />
               </div>
             </div>
@@ -100,26 +100,29 @@ export default function Home() {
           <Input type="email" placeholder="Plain text decision creation" />
           <Button type="submit">Add</Button>
         </div>
+        <footer className="w-full mt-10 py-4 px-4">
+          <div className="flex flex-col items-center justify-center space-y-2 text-grey-600">
+            {/* Icons Section */}
+            <p>
+              <a
+                href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
+                className="font-bold text-xs text-gray-600 hover:text-black"
+              >
+                RE:frontend junior position application
+              </a>
+            </p>
+            <p className="flex space-x-4 ">
+              <CrumpledPaperIcon className="h-4 w-4" />
+              <GlobeIcon className="h-4 w-4" />
+              <RocketIcon className="h-4 w-4" />
+              <LinkedInLogoIcon className="h-4 w-4" />
+              <ArchiveIcon className="h-4 w-4" />
+              <Send className="h-4 w-4" />
+            </p>
+          </div>
+        </footer>
       </div>
       {/* Footer Section */}
-      <footer className="w-full mt-8 py-4 flex items-center justify-between px-4">
-        {/* Icons Section */}
-        <div className="flex space-x-4">
-          <CrumpledPaperIcon className="h-4 w-4" />
-          <GlobeIcon className="h-4 w-4" />
-          <RocketIcon className="h-4 w-4" />
-          <LinkedInLogoIcon className="h-6 w-6" />
-          <ArchiveIcon className="h-4 w-4" />
-          <p>
-            <a
-              href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
-              className="font-bold text-xs text-gray-700 hover:text-black"
-            >
-              RE:frontend junior position application
-            </a>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
