@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import DecisionModal from "@/components/ui/DecisionModal";
+import DecisionModal from "@/components/modals/DecisionModal";
 import DecisionTable from "@/components/DecisionTable";
 import { useDecisionContext } from "@/context/DecisionContext";
 import LoadContext from "@/context/LoadContext";
