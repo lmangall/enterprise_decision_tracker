@@ -15,10 +15,12 @@ export async function fetchAIDecision(userInput: string) {
     "title": "string",
     "description": "string",
     "measurable_goal": "string",
-    "goal_date": "string (ISO format) | null"
+    "goal_date": "string (ISO format)"
   }
 
   Please provide a JSON response following this structure.`;
+
+  console.log(prompt);
 
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -39,15 +41,18 @@ export async function fetchAIDecision(userInput: string) {
     }
 
     const data = await response.json();
+    console.log("API response:", data);
+    const content = data.choices[0].message.content;
+    console.log("choice0:", content);
 
     if (data.choices && data.choices.length > 0) {
       const decision = JSON.parse(data.choices[0].message.content);
+      console.log("-Parsed Decision:", decision);
       return { success: true, data: decision };
     } else {
       throw new Error("No decision found from OpenAI");
     }
   } catch (error) {
-    // Type assertion to handle the 'unknown' type error
     const errorMessage =
       (error as Error).message || "An unknown error occurred";
     console.error("Error:", errorMessage);

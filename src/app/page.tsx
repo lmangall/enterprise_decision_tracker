@@ -36,6 +36,7 @@ export default function Home() {
 
   const { control, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
+    console.log("calling fetchAIDecision");
     fetchAIDecision(data.userInput);
   };
 
