@@ -9,9 +9,9 @@ import LoadContext from "@/context/LoadContext";
 import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
-import { fetchAIDecision } from "@/components/FetchAIDecision";
+import { fetchAndCreateDecision } from "@/components/FetchAIDecision";
 import { Input } from "@/components/ui/input";
-import { CircleHelp, Send } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import {
   RocketIcon,
   CrumpledPaperIcon,
@@ -20,7 +20,6 @@ import {
   ArchiveIcon,
   GitHubLogoIcon,
 } from "@radix-ui/react-icons";
-
 import {
   Popover,
   PopoverContent,
@@ -28,26 +27,40 @@ import {
 } from "@/components/ui/popover";
 
 export default function Home() {
-  const { decisions } = useDecisionContext();
+  const { decisions, addDecision } = useDecisionContext();
   const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
     null
   );
   const { toast } = useToast();
-
   const { control, handleSubmit } = useForm();
-  const onSubmit = (data: any) => {
-    console.log("calling fetchAIDecision");
-    fetchAIDecision(data.userInput);
-  };
 
   const showToast = (title: string, message: string) => {
     const variant = title === "Error" ? "error" : "default";
-
     toast({
       title: title,
       description: message,
       variant: variant,
     });
+  };
+
+  const onSubmit = async (data: any) => {
+    const userInput = data.userInput;
+    const {
+      success,
+      data: decision,
+      error,
+    } = await fetchAndCreateDecision(userInput);
+
+    if (success && decision) {
+      try {
+        await addDecision(decision);
+        showToast("Success", "Decision created successfully!");
+      } catch (error) {
+        showToast("Error", "Failed to add decision to context.");
+      }
+    } else {
+      showToast("Error", error || "An unknown error occurred");
+    }
   };
 
   return (
@@ -57,7 +70,6 @@ export default function Home() {
           <div className="w-full gap-4">
             <div className="pb-2 flex items-center justify-between gap-4 w-full">
               <div className="flex flex-col w-full">
-                {/* Flex container for h1 and RocketIcon */}
                 <div className="flex items-center space-x-2">
                   <h1 className="text-xl font-semibold">Decision Dashboard</h1>
                   <RocketIcon className="h-6 w-6" />
@@ -67,10 +79,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="md:w-1/3 w-full">
-                {/* Apply w-full inside DecisionModal */}
-                <DecisionModal
-                  setToast={(title, message) => showToast(title, message)}
-                />
+                <DecisionModal setToast={showToast} />
               </div>
             </div>
             <div className="sticky flex flex-col md:flex-row gap-4 w-full">
@@ -88,38 +97,44 @@ export default function Home() {
           </div>
         </main>
         <div className="flex w-full items-center space-x-2 pt-1">
-          <Popover>
-            <PopoverTrigger className="hidden text-muted-foreground hover:text-foreground disabled:opacity-50 sm:flex">
-              <CircleHelp className="h-5 w-5" />
-              <span className="sr-only">Block description</span>
-            </PopoverTrigger>
-            <PopoverContent
-              side="top"
-              sideOffset={20}
-              className="space-y-3 rounded-[0.5rem] text-sm"
+          <div className="flex items-center flex-1">
+            <Popover>
+              <PopoverTrigger className="text-muted-foreground hover:text-foreground disabled:opacity-50 flex items-center space-x-2">
+                <CircleHelp className="h-5 w-5" />
+                <span className="sr-only">Block description</span>
+              </PopoverTrigger>
+              <PopoverContent
+                side="top"
+                sideOffset={20}
+                className="space-y-3 rounded-[0.5rem] text-sm"
+              >
+                <p className="font-medium">
+                  This AI feature allows you to type a decision in plain text,
+                  behind the scenes it will be formatted and enhanced before
+                  being added to the list
+                </p>
+                <p className="font-medium">Try it for yourself!</p>
+              </PopoverContent>
+            </Popover>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-1 space-x-2"
             >
-              <p className="font-medium">
-                This AI feature allows you to type a decision in plain text,
-                behind the scenes it will be formatted and enhanced before being
-                added to the list
-              </p>
-              <p className="font-medium">Try it for yourself!</p>
-            </PopoverContent>
-          </Popover>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="userInput"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  type="text"
-                  placeholder="Plain text decision creation"
-                  {...field}
-                />
-              )}
-            />
-            <Button type="submit">Add</Button>
-          </form>
+              <Controller
+                name="userInput"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    type="text"
+                    placeholder="Plain text decision creation"
+                    {...field}
+                    className="flex-1"
+                  />
+                )}
+              />
+              <Button type="submit">Add</Button>
+            </form>
+          </div>
         </div>
         <footer className="w-full mt-10 py-4 px-4">
           <div className="flex flex-col items-center justify-center space-y-2 text-grey-600">
@@ -137,7 +152,6 @@ export default function Home() {
               <RocketIcon className="h-4 w-4" />
               <LinkedInLogoIcon className="h-4 w-4" />
               <ArchiveIcon className="h-4 w-4" />
-              <Send className="h-4 w-4" />
               <GitHubLogoIcon className="h-4 w-4" />
             </p>
           </div>
