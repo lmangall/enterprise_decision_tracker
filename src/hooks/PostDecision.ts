@@ -1,28 +1,31 @@
-// This component could both add to db and context but it's good practice to separate server-side code and client-side state
-// Furthermore, with "use server" React context (useContext) is not accessible
-
 "use server";
 
 import { db } from "@vercel/postgres";
 import { NewDecision, Decision } from "@/types/decision";
 
-// Put on db
-//TODO: modify createDecision to updateDecision: it should update the db relative to the context, it doesn't need to be passed a prop
 export async function createDecision(
   newDecision: NewDecision
 ): Promise<Decision> {
   const client = await db.connect(); // Connect to the database
+
   try {
+    // Format goal_date to 'YYYY-MM-DD' if it's a Date object, otherwise use the string directly
+    const formattedGoalDate = newDecision.goal_date
+      ? typeof newDecision.goal_date === "string"
+        ? newDecision.goal_date
+        : newDecision.goal_date.toISOString().split("T")[0]
+      : null;
+
     const result = await client.sql`
       INSERT INTO decisions (
         golden_ticket, title, description, measurable_goal, status, goal_met, comments, goal_date
       ) VALUES (
-        ${newDecision.golden_ticket}, ${newDecision.title}, ${newDecision.description}, ${newDecision.measurable_goal}, ${newDecision.status}, ${newDecision.goal_met}, ${newDecision.comments}, ${newDecision.goal_date}
+        ${newDecision.golden_ticket}, ${newDecision.title}, ${newDecision.description}, ${newDecision.measurable_goal}, ${newDecision.status}, ${newDecision.goal_met}, ${newDecision.comments}, ${formattedGoalDate}
       )
       RETURNING *;
     `;
 
-    //convert date fields to strings
+    // Convert date fields to strings
     const insertedDecision = {
       ...result.rows[0],
       created_at: result.rows[0].created_at.toISOString(),
@@ -35,8 +38,8 @@ export async function createDecision(
     return insertedDecision as Decision;
   } catch (error) {
     console.error("Failed to create decision", error);
-    throw error;
+    throw error; // Re-throw the error to be handled by the caller
   } finally {
-    client.release();
+    client.release(); // Release the database connection
   }
 }
