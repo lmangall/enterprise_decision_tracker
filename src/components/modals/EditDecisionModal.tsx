@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDecisionContext } from "@/context/DecisionContext";
@@ -19,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
+import { Modal } from "./Modal";
 
 type EditDecisionModalProps = {
   decision: Decision;
@@ -65,137 +68,134 @@ export function EditDecisionModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[1000]">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative z-[1001]">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-2 top-2"
-          onClick={onClose}
-        >
-          <X className="h-4 w-4" />
-        </Button>
-        <h2 className="text-lg font-semibold mb-4">Edit Decision</h2>
-        <form onSubmit={handleSubmit(handleEdit)} className="space-y-4">
-          {/* Form fields */}
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Controller
-              name="title"
-              control={control}
-              rules={{ required: "Title is required" }}
-              render={({ field }) => (
-                <Input
-                  id="title"
-                  placeholder="Title of the decision"
-                  {...field}
-                />
-              )}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Controller
-              name="description"
-              control={control}
-              render={({ field }) => (
-                <Textarea
-                  id="description"
-                  placeholder="A more detailed explanation of the decision"
-                  {...field}
-                />
-              )}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="measurable_goal">Measurable Goal</Label>
-            <Controller
-              name="measurable_goal"
-              control={control}
-              rules={{ required: "Measurable goal is required" }}
-              render={({ field }) => (
-                <Input
-                  id="measurable_goal"
-                  placeholder="A single, clear, and quantifiable goal"
-                  {...field}
-                />
-              )}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="goal_date">Goal Date</Label>
-            <div className="flex items-center">
+    <Modal onClose={onClose}>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-2 top-2"
+        onClick={onClose}
+      >
+        <X className="h-4 w-4" />
+      </Button>
+      <h2 className="text-lg font-semibold mb-4">Edit Decision</h2>
+      <form onSubmit={handleSubmit(handleEdit)} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="title">Title</Label>
+          <Controller
+            name="title"
+            control={control}
+            rules={{ required: "Title is required" }}
+            render={({ field }) => (
               <Input
-                type="text"
-                value={goalDate ? format(goalDate, "PP") : ""}
-                readOnly
-                placeholder="Select a date"
-                className="w-full"
+                id="title"
+                placeholder="Title of the decision"
+                {...field}
               />
-              <Button
-                type="button"
-                variant="outline"
-                className="ml-2"
-                onClick={() => {}}
-              >
-                <CalendarIcon className="h-4 w-4" />
-              </Button>
-            </div>
-            {/* Calendar component */}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
-            <Controller
-              name="status"
-              control={control}
-              rules={{ required: "Status is required" }}
-              render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in process">In Process</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
+            )}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="description">Description</Label>
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <Textarea
+                id="description"
+                placeholder="A more detailed explanation of the decision"
+                {...field}
+              />
+            )}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="measurable_goal">Measurable Goal</Label>
+          <Controller
+            name="measurable_goal"
+            control={control}
+            rules={{ required: "Measurable goal is required" }}
+            render={({ field }) => (
+              <Input
+                id="measurable_goal"
+                placeholder="A single, clear, and quantifiable goal"
+                {...field}
+              />
+            )}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="goal_date">Goal Date</Label>
+          <div className="flex items-center">
+            <Input
+              type="text"
+              value={goalDate ? format(goalDate, "PP") : ""}
+              readOnly
+              placeholder="Select a date"
+              className="w-full"
             />
+            <Button
+              type="button"
+              variant="outline"
+              className="ml-2"
+              onClick={() => {}}
+            >
+              <CalendarIcon className="h-4 w-4" />
+            </Button>
           </div>
-          <div className="flex items-center space-x-2">
-            <Controller
-              name="goal_met"
-              control={control}
-              render={({ field }) => (
-                <Switch
-                  id="goal_met"
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              )}
-            />
-            <Label htmlFor="goal_met">Goal Met</Label>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="comments">Comments</Label>
-            <Controller
-              name="comments"
-              control={control}
-              render={({ field }) => (
-                <Textarea
-                  id="comments"
-                  placeholder="Additional comments"
-                  {...field}
-                />
-              )}
-            />
-          </div>
-          <Button type="submit" className="w-full">
-            Update Decision
-          </Button>
-        </form>
-      </div>
-    </div>
+          {/* Calendar component */}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="status">Status</Label>
+          <Controller
+            name="status"
+            control={control}
+            rules={{ required: "Status is required" }}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="in process">In Process</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+        <div className="flex items-center space-x-2">
+          <Controller
+            name="goal_met"
+            control={control}
+            render={({ field }) => (
+              <Switch
+                id="goal_met"
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            )}
+          />
+          <Label htmlFor="goal_met">Goal Met</Label>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="comments">Comments</Label>
+          <Controller
+            name="comments"
+            control={control}
+            render={({ field }) => (
+              <Textarea
+                id="comments"
+                placeholder="Additional comments"
+                {...field}
+              />
+            )}
+          />
+        </div>
+        <Button type="submit" className="w-full">
+          Update Decision
+        </Button>
+      </form>
+    </Modal>
   );
 }
