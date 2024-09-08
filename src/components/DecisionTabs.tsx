@@ -70,7 +70,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
                 </p>
               </div>
             ) : (
-              <p>Select a decision to view details</p>
+              <p></p>
             )}
           </CardContent>
         </Card>

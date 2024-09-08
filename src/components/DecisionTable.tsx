@@ -49,6 +49,15 @@ export default function DecisionTable({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleDelete = async (decision: Decision) => {
+    if (decision.golden_ticket == true) {
+      toast({
+        title: "This one is special",
+        description: "For obvious reasons, you can't delete this decision",
+        variant: "error",
+      });
+      return;
+    }
+
     try {
       await deleteDecision(decision.id);
       removeDecision(decision.id);

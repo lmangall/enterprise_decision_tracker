@@ -10,6 +10,7 @@
 - improve form validation + write docs
 - rickroll
 - confirm before deletion
+- check folders: not all components in hood directory are hooks
 
 - table ui:
 smaller goal date
