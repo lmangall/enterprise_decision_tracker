@@ -15,6 +15,7 @@ import {
   CrumpledPaperIcon,
   GlobeIcon,
   LinkedInLogoIcon,
+  ArchiveIcon,
 } from "@radix-ui/react-icons";
 
 import {
@@ -101,26 +102,24 @@ export default function Home() {
         </div>
       </div>
       {/* Footer Section */}
-      <div className="flex flex-col items-center justify-center min-h-screen sm:gap-4">
-        <footer className="w-full mt-8 py-4 flex items-center justify-between px-4">
-          {/* Icons Section */}
-          <div className="flex space-x-4">
-            <CrumpledPaperIcon className="h-4 w-4" />
-            <GlobeIcon className="h-4 w-4" />
-            <RocketIcon className="h-4 w-4" />
-          </div>
-
-          {/* Contact Section */}
-          <div className="flex items-center space-x-4">
-            <Button as="a" href="mailto:contact@example.com">
-              contact@example.com
-            </Button>
-            <Button as="a" href="https://linkedin.com" target="_blank">
-              <LinkedInLogoIcon className="h-6 w-6" />
-            </Button>
-          </div>
-        </footer>
-      </div>
+      <footer className="w-full mt-8 py-4 flex items-center justify-between px-4">
+        {/* Icons Section */}
+        <div className="flex space-x-4">
+          <CrumpledPaperIcon className="h-4 w-4" />
+          <GlobeIcon className="h-4 w-4" />
+          <RocketIcon className="h-4 w-4" />
+          <LinkedInLogoIcon className="h-6 w-6" />
+          <ArchiveIcon className="h-4 w-4" />
+          <p>
+            <a
+              href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
+              className="font-bold text-xs text-gray-700 hover:text-black"
+            >
+              RE:frontend junior position application
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
