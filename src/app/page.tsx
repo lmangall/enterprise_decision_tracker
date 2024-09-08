@@ -9,6 +9,12 @@ import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
 import { Input } from "@/components/ui/input";
+import { CircleHelp } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function Home() {
   const { decisions } = useDecisionContext();
@@ -67,8 +73,26 @@ export default function Home() {
           </div>
         </main>
         <div className="flex w-full items-center space-x-2">
-          <Input type="email" placeholder="Email" />
-          <Button type="submit">Subscribe</Button>
+          <Popover>
+            <PopoverTrigger className="hidden text-muted-foreground hover:text-foreground disabled:opacity-50 sm:flex">
+              <CircleHelp className="h-5 w-5" />
+              <span className="sr-only">Block description</span>
+            </PopoverTrigger>
+            <PopoverContent
+              side="top"
+              sideOffset={20}
+              className="space-y-3 rounded-[0.5rem] text-sm"
+            >
+              <p className="font-medium">
+                This AI feature allows you to type a decision in plain text,
+                behind the scenes it will be formatted and enhanced before being
+                added to the list
+              </p>
+              <p className="font-medium">Try it for yourself!</p>
+            </PopoverContent>
+          </Popover>
+          <Input type="email" placeholder="Plain text decision creation" />
+          <Button type="submit">Add</Button>
         </div>
       </div>
     </div>
