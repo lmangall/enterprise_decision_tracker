@@ -65,8 +65,8 @@ export function EditDecisionModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[1000]">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative z-[1001]">
         <Button
           variant="ghost"
           size="icon"

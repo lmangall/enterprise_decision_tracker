@@ -8,6 +8,7 @@ import LoadContext from "@/context/LoadContext";
 import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   const { decisions } = useDecisionContext();
@@ -65,6 +66,10 @@ export default function Home() {
             </div>
           </div>
         </main>
+        <div className="flex w-full items-center space-x-2">
+          <Input type="email" placeholder="Email" />
+          <Button type="submit">Subscribe</Button>
+        </div>
       </div>
     </div>
   );

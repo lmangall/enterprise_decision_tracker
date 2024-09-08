@@ -1,3 +1,4 @@
+import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -14,7 +15,7 @@ interface DecisionTabsProps {
 
 const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
   return (
-    <Tabs defaultValue="details">
+    <Tabs defaultValue="details" className="relative z-10">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="details">Detail</TabsTrigger>
         <TabsTrigger value="about">AI Help</TabsTrigger>
