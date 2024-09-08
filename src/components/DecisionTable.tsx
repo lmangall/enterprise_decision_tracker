@@ -32,12 +32,12 @@ import {
 
 interface DecisionTableProps {
   decisions: Decision[];
-  onSelectDecision: (decision: Decision) => void; // Add this line
+  onSelectDecision: (decision: Decision) => void;
 }
 
 export default function DecisionTable({
   decisions,
-  onSelectDecision, // Add this line
+  onSelectDecision,
 }: DecisionTableProps) {
   const { removeDecision } = useDecisionContext();
   const [selectedDecision, setSelectedDecision] = useState<Decision | null>(
@@ -91,7 +91,7 @@ export default function DecisionTable({
             <TableRow
               key={decision.id}
               className="cursor-pointer hover:bg-gray-100"
-              onClick={() => onSelectDecision(decision)} // Add this line
+              onClick={() => onSelectDecision(decision)}
             >
               <TableCell>
                 {decision.title}
