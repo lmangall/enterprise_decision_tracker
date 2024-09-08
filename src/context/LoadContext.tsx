@@ -22,7 +22,7 @@ const LoadContext: React.FC = () => {
       try {
         const fetchedDecisions: Decision[] = await retrieveDecisions();
         fetchedDecisions.forEach((decision) => addDecisionFromDB(decision));
-        console.log("Decisions loaded:", fetchedDecisions);
+        // console.log("Decisions loaded:", fetchedDecisions);
         setFetched(true); // Mark as fetched after successful loading
         setLoading(false);
       } catch (err) {

@@ -47,7 +47,7 @@ export function EditDecisionModal({
       if (isDuplicateDecision(updatedDecision, decisions)) {
         throw new Error("A decision with similar details already exists.");
       }
-      console.log("before calling editDecisionDB");
+      // console.log("before calling editDecisionDB");
       await editDecisionDB(updatedDecision);
       updateDecision(updatedDecision);
       onClose(); // close the modal

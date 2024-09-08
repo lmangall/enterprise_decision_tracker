@@ -165,25 +165,33 @@ export default function Home() {
               >
                 RE:frontend junior position application
               </a>
-            </p>
-            <p className="flex space-x-4 ">
-              <CrumpledPaperIcon className="h-4 w-4" />
-              <GlobeIcon className="h-4 w-4" />
-              <RocketIcon className="h-4 w-4" />
-              <LinkedInLogoIcon className="h-4 w-4" />
-              <ArchiveIcon className="h-4 w-4" />
-              <GitHubLogoIcon className="h-4 w-4" />
-              <PaperPlaneIcon className="h-4 w-4" />
-              <CursorArrowIcon className="h-4 w-4" />
-              <BarChartIcon className="h-4 w-4" />
-              <AccessibilityIcon className="h-4 w-4" />
-              <PersonIcon className="h-4 w-4" />
-              <MagicWandIcon className="h-4 w-4" />
-              <CubeIcon className="h-4 w-4" />
-              <FileIcon className="h-4 w-4" />
-              <ChatBubbleIcon className="h-4 w-4" />
-              <EnvelopeClosedIcon className="h-4 w-4" />
-            </p>
+              <p className="flex space-x-4 ">
+  <a 
+    href="https://www.linkedin.com/in/l-mangallon/" 
+    className="font-bold text-xs text-gray-600 hover:text-black"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <LinkedInLogoIcon className="h-4 w-4" />
+  </a>
+  <a 
+    href="https://github.com/lmangall/" 
+    className="font-bold text-xs text-gray-600 hover:text-black"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <GitHubLogoIcon className="h-4 w-4" />
+  </a>
+  <a 
+    href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran" 
+    className="font-bold text-xs text-gray-600 hover:text-black"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <MagicWandIcon className="h-4 w-4" />
+  </a>
+</p>
+
           </div>
         </footer>
       </div>

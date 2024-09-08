@@ -5,7 +5,7 @@ import { Decision } from "@/types/decision";
 // Validation is done on the client side (context), in a parent component to prevent unnecessary calls to the backend
 
 export async function editDecisionDB(decision: Decision): Promise<boolean> {
-  console.log("editDecisionDB called with:", decision);
+  // console.log("editDecisionDB called with:", decision);
 
   try {
     const client = await db.connect();
@@ -29,14 +29,14 @@ export async function editDecisionDB(decision: Decision): Promise<boolean> {
       RETURNING id;
     `;
 
-    console.log("SQL query result:", result); // Check this output
+    // console.log("SQL query result:", result); // Check this output
 
     if (result.rowCount === 0) {
       console.error(`No decision found with id ${decision.id}`);
       return false;
     }
 
-    console.log(`Successfully edited decision with id ${decision.id}`);
+    // console.log(`Successfully edited decision with id ${decision.id}`);
     return true;
   } catch (error) {
     console.error("Failed to edit decision:", error);

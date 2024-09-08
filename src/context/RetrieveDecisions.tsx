@@ -24,7 +24,7 @@ export default async function retrieveDecisions(): Promise<Decision[]> {
       goal_date: row.goal_date ? row.goal_date.toISOString() : null, // Convert to ISO string or null
     }));
 
-    console.log("Loaded decisions from DB:", decisions);
+    // console.log("Loaded decisions from DB:", decisions);
     return decisions;
   } catch (error) {
     console.error("Failed to load decisions from the database", error);

@@ -16,7 +16,7 @@ export async function deleteDecision(id: number): Promise<boolean> {
       return false;
     }
 
-    console.log(`Successfully deleted decision with id ${id}`);
+    // console.log(`Successfully deleted decision with id ${id}`);
     return true;
   } catch (error) {
     console.error("Failed to delete decision", error);
