@@ -24,7 +24,7 @@ export async function editDecision(decision: Decision): Promise<boolean> {
         status = ${decision.status},
         goal_met = ${decision.goal_met},
         comments = ${decision.comments},
-    goal_date = ${formattedGoalDate},
+      goal_date = ${formattedGoalDate},
         updated_at = NOW()
       WHERE id = ${decision.id}
       RETURNING id;
