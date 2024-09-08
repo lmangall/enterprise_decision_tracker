@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Decision } from "@/types/decision";
-import AIHelpCard from "@/components/AIHelpCard";
+import AIAdviceCard from "@/components/AIAdviceCard";
 
 interface DecisionTabsProps {
   selectedDecision: Decision | null;
@@ -77,7 +77,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
         </Card>
       </TabsContent>
       <TabsContent value="about" className="max-h-96 overflow-y-auto">
-        <AIHelpCard selectedDecision={selectedDecision} />
+        <AIAdviceCard selectedDecision={selectedDecision} />
       </TabsContent>
     </Tabs>
   );

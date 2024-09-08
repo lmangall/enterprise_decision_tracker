@@ -1,6 +1,7 @@
 import "./globals.css";
 import { DecisionProvider } from "../context/DecisionContext";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata = {
   title: "Decision Tracker",
@@ -12,7 +13,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html>
       <body>
         <DecisionProvider>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+
           <Toaster />
         </DecisionProvider>
       </body>

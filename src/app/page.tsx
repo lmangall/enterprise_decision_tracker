@@ -12,23 +12,12 @@ import { Decision } from "@/types/decision";
 import { fetchAndCreateDecision } from "@/components/FetchAIDecision";
 import { Input } from "@/components/ui/input";
 import { CircleHelp } from "lucide-react";
+
 import {
   RocketIcon,
-  CrumpledPaperIcon,
-  GlobeIcon,
   LinkedInLogoIcon,
-  ArchiveIcon,
   GitHubLogoIcon,
-  PaperPlaneIcon,
-  CursorArrowIcon,
-  BarChartIcon,
-  AccessibilityIcon,
-  PersonIcon,
   MagicWandIcon,
-  CubeIcon,
-  FileIcon,
-  ChatBubbleIcon,
-  EnvelopeClosedIcon,
 } from "@radix-ui/react-icons";
 import {
   Popover,

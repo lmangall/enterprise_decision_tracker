@@ -17,7 +17,7 @@ interface DecisionTabsProps {
   selectedDecision: Decision | null;
 }
 
-export default function AIHelpCard({ selectedDecision }: DecisionTabsProps) {
+export default function AIAdviceCard({ selectedDecision }: DecisionTabsProps) {
   const [aiAdvice, setAiAdvice] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,9 +49,9 @@ export default function AIHelpCard({ selectedDecision }: DecisionTabsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>AI Help</CardTitle>
+        <CardTitle>AI Advice</CardTitle>
         <CardDescription>
-          Get help from AI to achieve your goals and crush those KPIs!
+          Get advices from AI to achieve your goals and crush those KPIs!
         </CardDescription>
       </CardHeader>
       <CardContent>

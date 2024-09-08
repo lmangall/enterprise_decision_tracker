@@ -18,7 +18,7 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { createDecision } from "@/hooks/PostDecision";
-import { Modal } from "./Modal"; // Import Modal
+import { Modal } from "./Modal";
 
 type FormData = {
   title: string;
