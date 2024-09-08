@@ -19,6 +19,16 @@ import {
   LinkedInLogoIcon,
   ArchiveIcon,
   GitHubLogoIcon,
+  PaperPlaneIcon,
+  CursorArrowIcon,
+  BarChartIcon,
+  AccessibilityIcon,
+  PersonIcon,
+  MagicWandIcon,
+  CubeIcon,
+  FileIcon,
+  ChatBubbleIcon,
+  EnvelopeClosedIcon,
 } from "@radix-ui/react-icons";
 import {
   Popover,
@@ -153,6 +163,16 @@ export default function Home() {
               <LinkedInLogoIcon className="h-4 w-4" />
               <ArchiveIcon className="h-4 w-4" />
               <GitHubLogoIcon className="h-4 w-4" />
+              <PaperPlaneIcon className="h-4 w-4" />
+              <CursorArrowIcon className="h-4 w-4" />
+              <BarChartIcon className="h-4 w-4" />
+              <AccessibilityIcon className="h-4 w-4" />
+              <PersonIcon className="h-4 w-4" />
+              <MagicWandIcon className="h-4 w-4" />
+              <CubeIcon className="h-4 w-4" />
+              <FileIcon className="h-4 w-4" />
+              <ChatBubbleIcon className="h-4 w-4" />
+              <EnvelopeClosedIcon className="h-4 w-4" />
             </p>
           </div>
         </footer>
