@@ -28,6 +28,7 @@ import {
   MoreVertical,
   Pencil,
   Trash2,
+  MoreHorizontal,
 } from "lucide-react";
 import { DecisionTableSkeleton } from "./decision-table-skeleton";
 
@@ -92,14 +93,13 @@ export default function DecisionTable({
 
   return (
     <>
-      <Table>
+      <Table className="min-h-[20px]">
         <TableHeader>
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Goal Met</TableHead>
-            <TableHead>Goal Date</TableHead>
-            <TableHead className="w-[70px]"></TableHead>
+            <TableHead className="font-bold"> Title</TableHead>
+            <TableHead className="font-bold"> Status</TableHead>
+            <TableHead className="font-bold">Goal Met</TableHead>
+            <TableHead className="font-bold">Goal Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -109,14 +109,7 @@ export default function DecisionTable({
               className="cursor-pointer hover:bg-gray-100"
               onClick={() => onSelectDecision(decision)}
             >
-              <TableCell>
-                {decision.title}
-                {decision.golden_ticket && (
-                  <Badge variant="secondary" className="ml-2">
-                    Golden Ticket
-                  </Badge>
-                )}
-              </TableCell>
+              <TableCell>{decision.title}</TableCell>
               <TableCell>
                 <Badge
                   variant={
@@ -149,9 +142,9 @@ export default function DecisionTable({
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
+                    <Button variant="ghost" className="h-7 w-7 p-0">
                       <span className="sr-only">Open menu</span>
-                      <MoreVertical className="h-4 w-4" />
+                      <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">

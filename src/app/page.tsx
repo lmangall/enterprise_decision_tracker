@@ -110,7 +110,7 @@ export default function Home() {
                   loading={loading}
                 />
               </div>
-              <div className="sticky md:w-1/3 bg-background rounded-xl border shadow w-full">
+              <div className="sticky md:w-1/3 bg-background rounded-xl border shadow w-full min-h-[500px]">
                 <DecisionTabs selectedDecision={selectedDecision} />
               </div>
             </div>

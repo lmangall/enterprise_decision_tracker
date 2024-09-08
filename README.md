@@ -12,12 +12,6 @@
 - confirm before deletion
 - check folders: not all components in hood directory are hooks
 
-- table ui:
-smaller goal date
-burger more on the right 
-status smaller
-categories bigger
-
 
 Deployed demo:
 https://enterprise-decision-tracker.vercel.app/
