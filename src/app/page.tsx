@@ -9,7 +9,7 @@ import LoadContext from "@/context/LoadContext";
 import { Button } from "@/components/ui/button";
 import DecisionTabs from "@/components/DecisionTabs";
 import { Decision } from "@/types/decision";
-import FetchAIDecision from "@/hooks/FetchAIDecision";
+import { fetchAIDecision } from "@/components/FetchAIDecision";
 import { Input } from "@/components/ui/input";
 import { CircleHelp, Send } from "lucide-react";
 import {
@@ -36,7 +36,7 @@ export default function Home() {
 
   const { control, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
-    FetchAIDecision(data.userInput);
+    fetchAIDecision(data.userInput);
   };
 
   const showToast = (title: string, message: string) => {
