@@ -158,40 +158,38 @@ export default function Home() {
         </div>
         <footer className="w-full mt-10 py-4 px-4">
           <div className="flex flex-col items-center justify-center space-y-2 text-grey-600">
-            <p>
+            <a
+              href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
+              className="font-bold text-xs text-gray-600 hover:text-black"
+            >
+              RE:frontend junior position application
+            </a>
+            <p className="flex space-x-4 ">
               <a
-                href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
+                href="https://www.linkedin.com/in/l-mangallon/"
                 className="font-bold text-xs text-gray-600 hover:text-black"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                RE:frontend junior position application
+                <LinkedInLogoIcon className="h-4 w-4" />
               </a>
-              <p className="flex space-x-4 ">
-  <a 
-    href="https://www.linkedin.com/in/l-mangallon/" 
-    className="font-bold text-xs text-gray-600 hover:text-black"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <LinkedInLogoIcon className="h-4 w-4" />
-  </a>
-  <a 
-    href="https://github.com/lmangall/" 
-    className="font-bold text-xs text-gray-600 hover:text-black"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <GitHubLogoIcon className="h-4 w-4" />
-  </a>
-  <a 
-    href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran" 
-    className="font-bold text-xs text-gray-600 hover:text-black"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <MagicWandIcon className="h-4 w-4" />
-  </a>
-</p>
-
+              <a
+                href="https://github.com/lmangall/"
+                className="font-bold text-xs text-gray-600 hover:text-black"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GitHubLogoIcon className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran"
+                className="font-bold text-xs text-gray-600 hover:text-black"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MagicWandIcon className="h-4 w-4" />
+              </a>
+            </p>
           </div>
         </footer>
       </div>
