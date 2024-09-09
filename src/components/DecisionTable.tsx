@@ -3,7 +3,7 @@ import { deleteDecision } from "@/hooks/DeleteDecision";
 import { toast } from "@/hooks/use-toast";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
-import { EditDecisionModal } from "@/components/modals/EditDecisionModal";
+import EditDecisionModal from "@/components/modals/EditDecisionModal";
 import { format } from "date-fns";
 import {
   Table,
