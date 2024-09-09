@@ -24,7 +24,7 @@ type FormData = {
   title: string;
   description: string;
   measurableGoal: string;
-  targetDate: Date | undefined; // Changed to undefined
+  targetDate: Date | undefined;
   status: "pending" | "in process" | "completed";
 };
 
@@ -47,7 +47,7 @@ export default function DecisionModal({ setToast }: DecisionModalProps) {
       title: "",
       description: "",
       measurableGoal: "",
-      targetDate: undefined, // Initialize with undefined
+      targetDate: undefined,
       status: "pending",
     },
   });
