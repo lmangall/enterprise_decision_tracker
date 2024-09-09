@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDecisionContext } from "@/context/DecisionContext";
-import { Decision } from "@/types/decision";
-import { editDecisionDB } from "@/hooks/EditDecisionDB";
-import { toast } from "@/hooks/use-toast";
-import { isDuplicateDecision } from "@/components/utils/validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -17,231 +12,242 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { Label } from "@/components/ui/label";
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
+import { useDecisionContext } from "@/context/DecisionContext";
+import { createDecision } from "@/hooks/PostDecision";
 import { Modal } from "./Modal";
-import { Calendar } from "@/components/ui/calendar"; // Make sure this import is correct
 
-type EditDecisionModalProps = {
-  decision: Decision;
-  onClose: () => void;
+type FormData = {
+  title: string;
+  description: string;
+  measurableGoal: string;
+  targetDate: Date | undefined; // Changed to undefined
+  status: "pending" | "in process" | "completed";
 };
 
-export function EditDecisionModal({
-  decision,
-  onClose,
-}: EditDecisionModalProps) {
-  const { decisions, updateDecision } = useDecisionContext();
+type DecisionModalProps = {
+  setToast: (title: string, message: string) => void;
+};
+
+export default function DecisionModal({ setToast }: DecisionModalProps) {
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const { addDecision } = useDecisionContext();
   const {
     control,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-  } = useForm<Decision>({
+  } = useForm<FormData>({
     defaultValues: {
-      ...decision,
-      goal_date: decision.goal_date ? new Date(decision.goal_date) : null,
+      title: "",
+      description: "",
+      measurableGoal: "",
+      targetDate: undefined, // Initialize with undefined
+      status: "pending",
     },
   });
 
-  const goalDate = watch("goal_date");
-  const status = watch("status");
+  const targetDate = watch("targetDate");
 
-  const handleEdit = async (updatedDecision: Decision) => {
+  const onSubmit = async (data: FormData) => {
     try {
-      if (isDuplicateDecision(updatedDecision, decisions)) {
-        throw new Error("A decision with similar details already exists.");
-      }
-      await editDecisionDB(updatedDecision);
-      updateDecision(updatedDecision);
-      onClose(); // close the modal
+      const newDecision = {
+        id: 0,
+        created_at: "",
+        updated_at: "",
+        golden_ticket: false,
+        title: data.title,
+        description: data.description,
+        measurable_goal: data.measurableGoal,
+        status: data.status,
+        goal_met: false,
+        goal_date: data.targetDate ? data.targetDate.toISOString() : null, // Handle undefined case
+      };
 
-      toast({
-        title: "Success",
-        description: "Decision edited successfully",
-      });
+      await addDecision(newDecision);
+      await createDecision(newDecision);
+
+      setIsFormVisible(false);
+      setToast("Success", "Decision created successfully!");
     } catch (error) {
-      console.error("Failed to edit decision:", error);
-      toast({
-        title: "Error",
-        description:
-          error instanceof Error ? error.message : "Failed to edit decision",
-        variant: "destructive",
-      });
+      console.error("Failed to create decision", error);
+      if (error instanceof Error) {
+        setToast("Error", error.message);
+      } else {
+        setToast("Error", "An unknown error occurred");
+      }
     }
   };
 
-  useEffect(() => {
-    if (status === "completed") {
-      toast({
-        title: "Optional Actions",
-        description: "You can add a comment or mark the goal as met.",
-      });
-    }
-  }, [status]);
-
   return (
-    <Modal onClose={onClose}>
+    <div>
       <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-2 top-2"
-        onClick={onClose}
+        variant="outline"
+        className="w-full"
+        onClick={() => setIsFormVisible(true)}
       >
-        <X className="h-4 w-4" />
+        New Decision
       </Button>
-      <h2 className="text-lg font-semibold mb-4">Edit Decision</h2>
-      <form onSubmit={handleSubmit(handleEdit)} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="title">Title</Label>
-          <Controller
-            name="title"
-            control={control}
-            rules={{ required: "Title is required" }}
-            render={({ field }) => (
-              <Input
-                id="title"
-                placeholder="Title of the decision"
-                {...field}
-              />
-            )}
-          />
-          {errors.title && (
-            <p className="text-red-500">{errors.title.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => (
-              <Textarea
-                id="description"
-                placeholder="A more detailed explanation of the decision"
-                {...field}
-              />
-            )}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="measurable_goal">Measurable Goal</Label>
-          <Controller
-            name="measurable_goal"
-            control={control}
-            rules={{ required: "Measurable goal is required" }}
-            render={({ field }) => (
-              <Input
-                id="measurable_goal"
-                placeholder="A single, clear, and quantifiable goal"
-                {...field}
-              />
-            )}
-          />
-          {errors.measurable_goal && (
-            <p className="text-red-500">{errors.measurable_goal.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="goal_date">Goal Date</Label>
-          <div className="flex items-center">
-            <Input
-              type="text"
-              value={goalDate ? format(goalDate, "PP") : ""}
-              readOnly
-              placeholder="Select a date"
-              className="w-full"
-            />
-            <Button
-              type="button"
-              variant="outline"
-              className="ml-2"
-              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-            >
-              <CalendarIcon className="h-4 w-4" />
-            </Button>
-          </div>
-          {isCalendarOpen && (
-            <div className="absolute z-10 bg-white border rounded-md shadow-md mt-1">
-              <Calendar
-                mode="single"
-                selected={goalDate ?? undefined}
-                onSelect={(date) => {
-                  if (date) {
-                    setValue("goal_date", date);
-                  }
-                  setIsCalendarOpen(false);
+
+      {isFormVisible && (
+        <Modal onClose={() => setIsFormVisible(false)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-2 top-2"
+            onClick={() => setIsFormVisible(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <h2 className="text-lg font-semibold mb-4">Create New Decision</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Controller
+                name="title"
+                control={control}
+                rules={{
+                  required: "Title is required",
+                  minLength: {
+                    value: 4,
+                    message: "Title must be at least 5 characters long",
+                  },
                 }}
-                initialFocus
+                render={({ field }) => (
+                  <div>
+                    <Input
+                      id="title"
+                      placeholder="Title of the decision"
+                      {...field}
+                      className={`border ${
+                        errors.title ? "border-red-500" : "border-gray-300"
+                      }`}
+                    />
+                    {errors.title && (
+                      <p className="text-red-500 text-sm">
+                        {errors.title.message}
+                      </p>
+                    )}
+                  </div>
+                )}
               />
             </div>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="status">Status</Label>
-          <Controller
-            name="status"
-            control={control}
-            rules={{ required: "Status is required" }}
-            render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in process">In Process</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {errors.status && (
-            <p className="text-red-500">{errors.status.message}</p>
-          )}
-        </div>
-
-        {/* Toggle goal_met only when status is 'completed' */}
-        <div className="flex items-center space-x-2">
-          <Controller
-            name="goal_met"
-            control={control}
-            render={({ field }) => (
-              <Switch
-                id="goal_met"
-                checked={field.value}
-                onCheckedChange={field.onChange}
-                disabled={status !== "completed"}
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Controller
+                name="description"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    id="description"
+                    placeholder="A more detailed explanation of the decision"
+                    {...field}
+                  />
+                )}
               />
-            )}
-          />
-          <Label htmlFor="goal_met">Goal Met</Label>
-        </div>
-
-        {/* Conditionally render comments field if status is 'completed'*/}
-        {status === "completed" && (
-          <div className="space-y-2">
-            <Label htmlFor="comments">Comments (Optional)</Label>
-            <Controller
-              name="comments"
-              control={control}
-              render={({ field }) => (
-                <Textarea
-                  id="comments"
-                  placeholder="Add any comments if you want"
-                  {...field}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="measurableGoal">Measurable Goal</Label>
+              <Controller
+                name="measurableGoal"
+                control={control}
+                rules={{
+                  required: "Measurable goal is required",
+                  minLength: {
+                    value: 10,
+                    message:
+                      "Measurable goal must be at least 10 characters long",
+                  },
+                }}
+                render={({ field }) => (
+                  <div>
+                    <Input
+                      id="measurableGoal"
+                      placeholder="A single, clear, and quantifiable goal"
+                      {...field}
+                      className={`border ${
+                        errors.measurableGoal
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                    />
+                    {errors.measurableGoal && (
+                      <p className="text-red-500 text-sm">
+                        {errors.measurableGoal.message}
+                      </p>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="targetDate">Target Date</Label>
+              <div className="flex items-center">
+                <Input
+                  type="text"
+                  value={targetDate ? format(targetDate, "PP") : ""}
+                  readOnly
+                  placeholder="Select a date"
+                  className="w-full"
                 />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="ml-2"
+                  onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                >
+                  <CalendarIcon className="h-4 w-4" />
+                </Button>
+              </div>
+              {isCalendarOpen && (
+                <div className="absolute z-10 bg-white border rounded-md shadow-md mt-1">
+                  <Calendar
+                    mode="single"
+                    selected={targetDate ?? undefined} // Handle targetDate here
+                    onSelect={(date) => {
+                      if (date) {
+                        setValue("targetDate", date);
+                      } else {
+                        setValue("targetDate", undefined);
+                      }
+                      setIsCalendarOpen(false);
+                    }}
+                    initialFocus
+                  />
+                </div>
               )}
-            />
-          </div>
-        )}
-
-        <Button type="submit" className="w-full">
-          Update Decision
-        </Button>
-      </form>
-    </Modal>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="status">Status</Label>
+              <Controller
+                name="status"
+                control={control}
+                rules={{ required: "Status is required" }}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="in process">In Process</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Submit Decision
+            </Button>
+          </form>
+        </Modal>
+      )}
+    </div>
   );
 }
