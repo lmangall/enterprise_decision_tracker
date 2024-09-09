@@ -21,6 +21,7 @@ import { Decision } from "@/types/decision";
 import { editDecisionDB } from "@/hooks/EditDecisionDB";
 import { toast } from "@/hooks/use-toast";
 import { isDuplicateDecision } from "@/components/utils/validation";
+import { Switch } from "@/components/ui/switch";
 
 type FormData = {
   title: string;
@@ -28,6 +29,8 @@ type FormData = {
   measurableGoal: string;
   targetDate: Date | undefined;
   status: "pending" | "in process" | "completed";
+  goal_met?: boolean;
+  comments?: string;
 };
 
 interface EditDecisionModalProps {
@@ -54,10 +57,13 @@ export default function EditDecisionModal({
       measurableGoal: decision.measurable_goal,
       targetDate: decision.goal_date ? new Date(decision.goal_date) : undefined,
       status: decision.status,
+      goal_met: decision.goal_met,
+      comments: decision.comments,
     },
   });
 
   const targetDate = watch("targetDate");
+  const status = watch("status"); // Watch the status field
 
   useEffect(() => {
     // Reset form values when decision changes
@@ -69,6 +75,8 @@ export default function EditDecisionModal({
       decision.goal_date ? new Date(decision.goal_date) : undefined
     );
     setValue("status", decision.status);
+    setValue("goal_met", decision.goal_met);
+    setValue("comments", decision.comments);
   }, [decision, setValue]);
 
   const onSubmit = async (data: FormData) => {
@@ -80,6 +88,8 @@ export default function EditDecisionModal({
         measurable_goal: data.measurableGoal,
         status: data.status,
         goal_date: data.targetDate ? data.targetDate.toISOString() : null,
+        goal_met: data.goal_met,
+        comments: data.comments,
       };
 
       // Check if updated decision is a duplicate
@@ -250,6 +260,41 @@ export default function EditDecisionModal({
             )}
           />
         </div>
+
+        {/* Conditionally render Goal Met and Comments fields based on status */}
+        {status === "completed" && (
+          <>
+            <div className="flex items-center space-x-2">
+              <Controller
+                name="goal_met"
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    id="goal_met"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                )}
+              />
+              <Label htmlFor="goal_met">Goal Met</Label>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="comments">Comments</Label>
+              <Controller
+                name="comments"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    id="comments"
+                    placeholder="Additional comments"
+                    {...field}
+                  />
+                )}
+              />
+            </div>
+          </>
+        )}
+
         <Button type="submit" className="w-full">
           Submit Changes
         </Button>
