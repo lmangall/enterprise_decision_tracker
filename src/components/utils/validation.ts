@@ -13,7 +13,7 @@ export const isDuplicateDecision = (
 
   return existingDecisions.some(
     (existingDecision) =>
-      existingDecision.id !== newDecision.id && // if the id is the same, false is returned
+      existingDecision.id !== newDecision.id && // Check to ensure we don't compare the same decision
       (existingDecision.title.toLowerCase() ===
         newDecision.title.toLowerCase() ||
         existingDecision.description?.toLowerCase() ===

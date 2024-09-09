@@ -1,6 +1,4 @@
-// EditDecisionModal.tsx
 "use client";
-
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -42,7 +40,7 @@ export default function EditDecisionModal({
   onClose,
 }: EditDecisionModalProps) {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const { updateDecision } = useDecisionContext(); // Assuming you have an updateDecision hook
+  const { updateDecision, decisions } = useDecisionContext(); // Ensure decisions are available from context
   const {
     control,
     handleSubmit,
@@ -83,10 +81,12 @@ export default function EditDecisionModal({
         status: data.status,
         goal_date: data.targetDate ? data.targetDate.toISOString() : null,
       };
-      if (isDuplicateDecision(updatedDecision, decision)) {
+
+      // Check if updated decision is a duplicate
+      if (isDuplicateDecision(updatedDecision, decisions)) {
         throw new Error("A decision with similar details already exists.");
       }
-      console.log("before calling editDecisionDB");
+
       await editDecisionDB(updatedDecision);
       updateDecision(updatedDecision);
       onClose(); // Close modal on successful update
@@ -118,6 +118,7 @@ export default function EditDecisionModal({
       </Button>
       <h2 className="text-lg font-semibold mb-4">Edit Decision</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Form Fields */}
         <div className="space-y-2">
           <Label htmlFor="title">Title</Label>
           <Controller
