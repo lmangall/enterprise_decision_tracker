@@ -20,6 +20,9 @@ import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Modal } from "./Modal";
 import { Decision } from "@/types/decision";
+import { editDecisionDB } from "@/hooks/editDecisionDB";
+import { toast } from "@/hooks/use-toast";
+import { isDuplicateDecision } from "@/components/utils/validation";
 
 type FormData = {
   title: string;
@@ -80,13 +83,26 @@ export default function EditDecisionModal({
         status: data.status,
         goal_date: data.targetDate ? data.targetDate.toISOString() : null,
       };
-
-      await updateDecision(updatedDecision);
-
+      if (isDuplicateDecision(updatedDecision, decision)) {
+        throw new Error("A decision with similar details already exists.");
+      }
+      console.log("before calling editDecisionDB");
+      await editDecisionDB(updatedDecision);
+      updateDecision(updatedDecision);
       onClose(); // Close modal on successful update
+
+      toast({
+        title: "Success",
+        description: "Decision edited successfully",
+      });
     } catch (error) {
-      console.error("Failed to update decision", error);
-      // Handle error (you might want to add a toast notification here)
+      console.error("Failed to edit decision:", error);
+      toast({
+        title: "Error",
+        description:
+          error instanceof Error ? error.message : "Failed to edit decision",
+        variant: "destructive",
+      });
     }
   };
 

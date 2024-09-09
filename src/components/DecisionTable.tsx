@@ -52,7 +52,7 @@ export default function DecisionTable({
     if (decision.golden_ticket === true) {
       toast({
         title: "This one is special",
-        description: "For obvious reasons, you can't delete this decision",
+        description: "It's here to stay",
         variant: "error",
       });
       return;

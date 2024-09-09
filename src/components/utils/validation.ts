@@ -6,6 +6,11 @@ export const isDuplicateDecision = (
   newDecision: Decision,
   existingDecisions: Decision[]
 ): boolean => {
+  if (!Array.isArray(existingDecisions)) {
+    console.error("existingDecisions is not an array");
+    return false; // or throw an error if needed
+  }
+
   return existingDecisions.some(
     (existingDecision) =>
       existingDecision.id !== newDecision.id && // if the id is the same, false is returned
