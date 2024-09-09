@@ -1,6 +1,13 @@
+
+### Validation and DB/Context relation:
+Classic type validation is handled through `react-hook-forms` (see below)
+- To add: we check first in context for a duplicate, if there are no duplicate we add to context and then db (id is highest + 1). This order is important to minimize unnecessary calls to backend and improve performance
+- To edit: In this case, naturally there can be a "duplicate" when we compare new form/existing form, as long as the id is the same its fine (otherwise the user is creating a second but identic one)
+- To delete: delete  both in db and context
+
 ### Form Validation Rules 
 
-Within `DecisionModal.tsx` also `validation.ts` for duplicates
+Mostly within `DecisionModal.tsx` also `validation.ts` for duplicates (validation is also done before adding to db and context)
 
 1. **Title**: Required field. The form will show an error message ("Title is required") if this field is empty. The title must also be at least 5 characters long.before adding to the context validation.ts will be called to check if a Decision with an identic field exist
 
@@ -15,6 +22,8 @@ Within `DecisionModal.tsx` also `validation.ts` for duplicates
 6. **Comment**:  The comments filled is only shown when the status is set to "completed".
 
 7. **Goal met**:  Disable the Goal Met Switch: The switch to toggle goal_met is visible only whenthe status is set to "completed." toggling it is optional.
+
+8. **Bonus**: The golden_ticket attribute cannot be modified from front end, when it is true the Decision cannot be deleted or modified
 
 
 ### Explanation of React Hook
