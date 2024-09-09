@@ -20,7 +20,7 @@ import { format } from "date-fns";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Modal } from "./Modal";
 import { Decision } from "@/types/decision";
-import { editDecisionDB } from "@/hooks/editDecisionDB";
+import { editDecisionDB } from "@/hooks/EditDecisionDB";
 import { toast } from "@/hooks/use-toast";
 import { isDuplicateDecision } from "@/components/utils/validation";
 
