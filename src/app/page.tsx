@@ -12,12 +12,19 @@ import { Decision } from "@/types/decision";
 import { fetchAndCreateDecision } from "@/components/FetchAIDecision";
 import { Input } from "@/components/ui/input";
 import { CircleHelp } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import {
   RocketIcon,
   LinkedInLogoIcon,
   GitHubLogoIcon,
   MagicWandIcon,
+  SunIcon,
 } from "@radix-ui/react-icons";
 import {
   Popover,
@@ -81,6 +88,19 @@ export default function Home() {
                 <div className="flex items-center space-x-2">
                   <RocketIcon className="h-7 w-7" />
                   <h1 className="text-xl font-semibold">Decision Dashboard</h1>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <SunIcon className="h-4 w-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>
+                          No proper dark mode yet, Please witch to clear mode
+                          for the best ui experience
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
                 <p className="text-gray-600 mb-3">
                   Track and manage your decisions
