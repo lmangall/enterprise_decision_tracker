@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDecisionContext } from "@/context/DecisionContext";
 import { Decision } from "@/types/decision";
@@ -22,6 +20,7 @@ import {
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { Modal } from "./Modal";
+import { Calendar } from "@/components/ui/calendar"; // Make sure this import is correct
 
 type EditDecisionModalProps = {
   decision: Decision;
@@ -33,6 +32,7 @@ export function EditDecisionModal({
   onClose,
 }: EditDecisionModalProps) {
   const { decisions, updateDecision } = useDecisionContext();
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const {
     control,
     handleSubmit,
@@ -73,7 +73,6 @@ export function EditDecisionModal({
     }
   };
 
-  // watch status and show a prompt if status changes to 'completed'
   useEffect(() => {
     if (status === "completed") {
       toast({
@@ -159,11 +158,26 @@ export function EditDecisionModal({
               type="button"
               variant="outline"
               className="ml-2"
-              onClick={() => {}}
+              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
             >
               <CalendarIcon className="h-4 w-4" />
             </Button>
           </div>
+          {isCalendarOpen && (
+            <div className="absolute z-10 bg-white border rounded-md shadow-md mt-1">
+              <Calendar
+                mode="single"
+                selected={goalDate ?? undefined}
+                onSelect={(date) => {
+                  if (date) {
+                    setValue("goal_date", date);
+                  }
+                  setIsCalendarOpen(false);
+                }}
+                initialFocus
+              />
+            </div>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="status">Status</Label>
@@ -206,7 +220,7 @@ export function EditDecisionModal({
           <Label htmlFor="goal_met">Goal Met</Label>
         </div>
 
-        {/* conditionally render comments field if status is 'completed'*/}
+        {/* Conditionally render comments field if status is 'completed'*/}
         {status === "completed" && (
           <div className="space-y-2">
             <Label htmlFor="comments">Comments (Optional)</Label>

@@ -22,7 +22,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
         <TabsTrigger value="details">Detail</TabsTrigger>
         <TabsTrigger value="about">AI Help</TabsTrigger>
       </TabsList>
-      <TabsContent value="details" className="max-h-96 overflow-y-auto">
+      <TabsContent value="details" className="overflow-y-auto">
         <Card>
           <CardHeader>
             <CardTitle>
@@ -76,7 +76,7 @@ const DecisionTabs: React.FC<DecisionTabsProps> = ({ selectedDecision }) => {
           </CardContent>
         </Card>
       </TabsContent>
-      <TabsContent value="about" className="max-h-96 overflow-y-auto">
+      <TabsContent value="about" className=" overflow-y-auto">
         <AIAdviceCard selectedDecision={selectedDecision} />
       </TabsContent>
     </Tabs>

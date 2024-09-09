@@ -100,7 +100,7 @@ export default function DecisionTable({
 
   return (
     <>
-      <Table className="min-h-[20px]">
+      <Table className="min-h-[10px]">
         <TableHeader>
           <TableRow>
             <TableHead className="font-bold">Title</TableHead>
@@ -115,24 +115,12 @@ export default function DecisionTable({
             <TableRow
               key={decision.id}
               className={`cursor-pointer hover:bg-gray-100 ${
-                decision.status === "completed"
-                  ? "text-gray-500  bg-slate-50"
-                  : ""
+                decision.status === "completed" ? "text-gray-500   " : ""
               }`}
               onClick={() => onSelectDecision(decision)}
             >
-              <TableCell
-                className={
-                  decision.status === "completed" ? " bg-slate-50" : ""
-                }
-              >
-                {decision.title}
-              </TableCell>
-              <TableCell
-                className={
-                  decision.status === "completed" ? " bg-slate-50" : ""
-                }
-              >
+              <TableCell>{decision.title}</TableCell>
+              <TableCell>
                 <Badge
                   variant={
                     decision.status === "completed"
@@ -145,11 +133,7 @@ export default function DecisionTable({
                   {decision.status}
                 </Badge>
               </TableCell>
-              <TableCell
-                className={
-                  decision.status === "completed" ? " bg-slate-50" : ""
-                }
-              >
+              <TableCell>
                 {decision.goal_met === undefined ? (
                   <CircleIcon className="h-5 w-5 text-gray-400" />
                 ) : decision.goal_met ? (
@@ -158,17 +142,17 @@ export default function DecisionTable({
                   <XCircleIcon className="h-5 w-5 text-red-500" />
                 )}
               </TableCell>
-              <TableCell
-                className={
-                  decision.status === "completed" ? " bg-slate-50" : ""
-                }
-              >
+              <TableCell>
                 {decision.goal_date
                   ? typeof decision.goal_date === "string"
-                    ? decision.goal_date
-                    : format(new Date(decision.goal_date), "PP")
+                    ? decision.goal_date.substring(0, 10)
+                    : format(new Date(decision.goal_date), "PP").substring(
+                        0,
+                        10
+                      )
                   : "N/A"}
               </TableCell>
+
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
