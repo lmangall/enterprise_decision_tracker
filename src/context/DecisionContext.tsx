@@ -32,8 +32,8 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     setDecisions((prevDecisions) => {
-      console.log("Added decision from DB:", decision);
-      console.log("Current context decisions:", [...prevDecisions, decision]);
+      //console.log("Added decision from DB:", decision);
+      //console.log("Current context decisions:", [...prevDecisions, decision]);
       return [...prevDecisions, decision];
     });
   };
@@ -53,7 +53,7 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
           : 0;
       const newDecision = { ...decision, id: lastId + 1 };
 
-      console.log("Added decision:", newDecision);
+      //console.log("Added decision:", newDecision);
       console.log("Current context decisions:", [
         ...prevDecisions,
         newDecision,
@@ -67,8 +67,8 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
       const updatedDecisions = prevDecisions.filter(
         (decision) => decision.id !== id
       );
-      console.log("Removed decision with id:", id);
-      console.log("Current context decisions:", updatedDecisions);
+      //console.log("Removed decision with id:", id);
+      //console.log("Current context decisions:", updatedDecisions);
       return updatedDecisions;
     });
   };
@@ -78,8 +78,8 @@ export const DecisionProvider: React.FC<{ children: ReactNode }> = ({
       const updatedDecisions = prevDecisions.map((decision) =>
         decision.id === updatedDecision.id ? updatedDecision : decision
       );
-      console.log("Updated decision:", updatedDecision);
-      console.log("Current context decisions:", updatedDecisions);
+      //console.log("Updated decision:", updatedDecision);
+      //console.log("Current context decisions:", updatedDecisions);
       return updatedDecisions;
     });
   };

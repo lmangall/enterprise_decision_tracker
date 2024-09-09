@@ -39,7 +39,6 @@ It relies on Radix and Tailwind
 
 </details>
 
-- aceternity
 
 
 ### Testing and code quality:
@@ -91,6 +90,8 @@ I know this one is a classic. I experienced it with the toast. Furthermore I was
 - aceternity animation (hero border gradient, moving borders, aurora background, )
 - confirm before deletion
 - check folders: not all components in hood directory are hooks
+- click outside of modal to exit
+- aceternity
 
 
 

@@ -147,12 +147,6 @@ export default function Home() {
         </div>
         <footer className="w-full mt-10 py-4 px-4">
           <div className="flex flex-col items-center justify-center space-y-2 text-grey-600">
-            <a
-              href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
-              className="font-bold text-xs text-gray-600 hover:text-black"
-            >
-              RE:frontend junior position application
-            </a>
             <p className="flex space-x-4 ">
               <a
                 href="https://www.linkedin.com/in/l-mangallon/"
@@ -179,6 +173,12 @@ export default function Home() {
                 <MagicWandIcon className="h-4 w-4" />
               </a>
             </p>
+            <a
+              href="mailto:l.mangallon@gmail.com?subject=RE:frontend junior position application"
+              className="font-bold text-xs text-gray-600 hover:text-black"
+            >
+              RE:frontend position application
+            </a>
           </div>
         </footer>
       </div>

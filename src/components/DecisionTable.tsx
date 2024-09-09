@@ -25,10 +25,9 @@ import {
   CheckCircle2Icon,
   XCircleIcon,
   CircleIcon,
-  MoreVertical,
+  MoreHorizontal,
   Pencil,
   Trash2,
-  MoreHorizontal,
 } from "lucide-react";
 import { DecisionTableSkeleton } from "./decision-table-skeleton";
 
@@ -50,7 +49,7 @@ export default function DecisionTable({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleDelete = async (decision: Decision) => {
-    if (decision.golden_ticket == true) {
+    if (decision.golden_ticket === true) {
       toast({
         title: "This one is special",
         description: "For obvious reasons, you can't delete this decision",
@@ -78,7 +77,7 @@ export default function DecisionTable({
   };
 
   const openEditModal = (decision: Decision) => {
-    if (decision.golden_ticket == true) {
+    if (decision.golden_ticket === true) {
       toast({
         title: "This one is special",
         description: "It looks pretty good the way it is, don't you think?",
@@ -104,21 +103,36 @@ export default function DecisionTable({
       <Table className="min-h-[20px]">
         <TableHeader>
           <TableRow>
-            <TableHead className="font-bold"> Title</TableHead>
-            <TableHead className="font-bold"> Status</TableHead>
+            <TableHead className="font-bold">Title</TableHead>
+            <TableHead className="font-bold">Status</TableHead>
             <TableHead className="font-bold">Goal Met</TableHead>
             <TableHead className="font-bold">Goal Date</TableHead>
+            <TableHead className="font-bold">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {decisions.map((decision) => (
             <TableRow
               key={decision.id}
-              className="cursor-pointer hover:bg-gray-100"
+              className={`cursor-pointer hover:bg-gray-100 ${
+                decision.status === "completed"
+                  ? "text-gray-500  bg-slate-50"
+                  : ""
+              }`}
               onClick={() => onSelectDecision(decision)}
             >
-              <TableCell>{decision.title}</TableCell>
-              <TableCell>
+              <TableCell
+                className={
+                  decision.status === "completed" ? " bg-slate-50" : ""
+                }
+              >
+                {decision.title}
+              </TableCell>
+              <TableCell
+                className={
+                  decision.status === "completed" ? " bg-slate-50" : ""
+                }
+              >
                 <Badge
                   variant={
                     decision.status === "completed"
@@ -131,7 +145,11 @@ export default function DecisionTable({
                   {decision.status}
                 </Badge>
               </TableCell>
-              <TableCell>
+              <TableCell
+                className={
+                  decision.status === "completed" ? " bg-slate-50" : ""
+                }
+              >
                 {decision.goal_met === undefined ? (
                   <CircleIcon className="h-5 w-5 text-gray-400" />
                 ) : decision.goal_met ? (
@@ -140,7 +158,11 @@ export default function DecisionTable({
                   <XCircleIcon className="h-5 w-5 text-red-500" />
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell
+                className={
+                  decision.status === "completed" ? " bg-slate-50" : ""
+                }
+              >
                 {decision.goal_date
                   ? typeof decision.goal_date === "string"
                     ? decision.goal_date
