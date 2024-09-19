@@ -44,4 +44,4 @@ cypress/screenshots
 
 # temp dev
 src/hooks/DeleteDecision
-src/hooks/EditDecision
+src/hooks/EditDecision.env
