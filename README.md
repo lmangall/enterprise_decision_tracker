@@ -4,6 +4,7 @@
 ## Intro
 This project was a coding challenge for a frontend position. You can see the assignment under Docs/assignment.md
 
+***Creativity:*** not only did it go past the requirements, but the two AI features (feedback on a decision and add create a decision from plain text instead of a form) I decided to add made the app becoming a nice, well rounded app instead of a super boring enterprise to-do list. I believe this is a great skill to demonstrate in a team, seiing past requirements and give a wow effect to a simple project.
 
 ## My Approach to this project:
 Building a react front-end without any back, seems like a pretty face without any soul or heart, so I wanted *at least* a database and decided to go over the requirements.
